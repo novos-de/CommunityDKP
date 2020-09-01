@@ -137,7 +137,7 @@ function CommDKP_OnBidderCommandReceived(text, name, doWhisperResponse)
     name = strsub(name, 1, dashPos-1)
   end
 
-  if string.find(text, "^[!！]bid%s+") == 1 and core.IsOfficer == true then
+  if string.find(text, "^[!！]bid") == 1 and core.IsOfficer == true then
     if core.BidInProgress then
       cmd = BidCmd(text)
       if (mode == "Static Item Values" and cmd ~= "cancel") or (mode == "Zero Sum" and cmd ~= "cancel" and core.DB.modes.ZeroSumBidType == "Static") then
