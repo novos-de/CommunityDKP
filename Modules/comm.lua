@@ -68,6 +68,9 @@ function CommDKP.Sync:OnEnable()
   CommDKP.Sync:RegisterComm("CommDKPBidShare", CommDKP.Sync:OnCommReceived())      -- broadcast accepted bids
   CommDKP.Sync:RegisterComm("CommDKPBidder", CommDKP.Sync:OnCommReceived())      -- Submit bids
   CommDKP.Sync:RegisterComm("CommDKPAllTabs", CommDKP.Sync:OnCommReceived())      -- Full table broadcast
+  CommDKP.Sync:RegisterComm("CommDKPAddAlt", CommDKP.Sync:OnCommReceived())		    -- Add Alt
+	CommDKP.Sync:RegisterComm("CommDKPRemAlt", CommDKP.Sync:OnCommReceived())		    -- Remove Alt
+	CommDKP.Sync:RegisterComm("CommDKPAddMain", CommDKP.Sync:OnCommReceived())		    -- Add Player
   CommDKP.Sync:RegisterComm("CommDKPSetPrice", CommDKP.Sync:OnCommReceived())      -- Set Single Item Price
   CommDKP.Sync:RegisterComm("CommDKPCurTeam", CommDKP.Sync:OnCommReceived())      -- Sets Current Raid Team
   CommDKP.Sync:RegisterComm("CommDKPTeams", CommDKP.Sync:OnCommReceived())
@@ -425,7 +428,8 @@ function CommDKP.Sync:OnCommReceived(prefix, message, distribution, sender)
         if (sender ~= UnitName("player")) then
           if prefix == "CommDKPLootDist" or prefix == "CommDKPDKPDist" or prefix == "CommDKPDelLoot" or prefix == "CommDKPDelSync" or prefix == "CommDKPMinBid" or prefix == "CDKPWhitelist"
           or prefix == "CommDKPDKPModes" or prefix == "CommDKPStand" or prefix == "CommDKPZSumBank" or prefix == "CommDKPBossLoot" or prefix == "CommDKPDecay" or prefix == "CommDKPDelUsers" or
-          prefix == "CommDKPAllTabs" or prefix == "CommDKPBidShare" or prefix == "CommDKPMerge" or prefix == "CommDKPSetPrice" or prefix == "CommDKPMaxBid" or prefix == "CommDKPAddUsers" then
+          prefix == "CommDKPAllTabs" or prefix == "CommDKPBidShare" or prefix == "CommDKPMerge" or prefix == "CommDKPSetPrice" or prefix == "CommDKPMaxBid" or prefix == "CommDKPAddUsers" 
+          or prefix == "CommDKPAddAlt"  or prefix == "CommDKPRemAlt" or prefix == "CommDKPAddMain" then
 
             if prefix == "CommDKPAllTabs" then   -- receives full table broadcast
               --print("[CommunityDKP] COMMS: Full Broadcast Receive Started for team "..CommDKP:GetTeamName(_objReceived.CurrentTeam));
@@ -942,6 +946,19 @@ function CommDKP.Sync:OnCommReceived(prefix, message, distribution, sender)
               end
 
               CommDKP:LootTable_Set(lootList)
+
+            elseif prefix == "CommDKPAddAlt" then
+							if 2 == #_objReceived.Data then
+								CommDKP:AddAlt(_objReceived.Data[1], _objReceived.Data[2], false, _objReceived.CurrentTeam)
+							end
+						elseif prefix == "CommDKPRemAlt" then
+							if 1 == #_objReceived.Data then
+								CommDKP:RemoveAlt(_objReceived.Data[1], false, _objReceived.CurrentTeam)
+							end
+						elseif prefix == "CommDKPAddMain" then
+							if 3 == #_objReceived.Data then
+								CommDKP:AddPlayer(_objReceived.Data[1], _objReceived.Data[2], _objReceived.Data[3], false, _objReceived.CurrentTeam)
+							end
             end
             
           end
@@ -1020,8 +1037,13 @@ function CommDKP.Sync:SendData(prefix, data, target, targetTeam)
     if prefix == "CommDKPBCastMsg" then
       CommDKP.Sync:SendCommMessage(prefix, _compressedObj, "RAID") -- changed to raid from guild
       return;
-    end  
+    end
 
+		if (prefix == "CommDKPAddAlt" or prefix == "CommDKPRemAlt" or prefix == "CommDKPAddMain") then
+			CommDKP.Sync:SendCommMessage(prefix, _compressedObj, "RAID")
+			return;
+    end
+    
     if (prefix == "CommDKPZSumBank" or prefix == "CommDKPBossLoot" or prefix == "CommDKPBidShare") then    -- Zero Sum bank/loot table/bid table data and bid submissions. Keep to raid.
       CommDKP.Sync:SendCommMessage(prefix, _compressedObj, "RAID")
       return;

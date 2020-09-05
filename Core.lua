@@ -165,6 +165,26 @@ function CommDKP:ResetPosition()
 	CommDKP:Print(L["POSITIONRESET"])
 end
 
+function CommDKP:ListSelected()
+	local selected = ""
+	local c = { hex="ffffffff" };
+	for i=1, #core.SelectedData do
+		local classSearch = CommDKP:Table_Search(CommDKP:GetTable(CommDKP_DKPTable, true), core.SelectedData[i].player)
+
+		if classSearch then
+			c = CommDKP:GetCColors(CommDKP:GetTable(CommDKP_DKPTable, true)[classSearch[1][1]].class)
+		end
+
+		if i == 1 then
+			selected = selected.."|c"..c.hex..core.SelectedData[i].player.."|r"
+		else
+			selected = selected..", |c"..c.hex..core.SelectedData[i].player.."|r"
+		end
+	end
+
+	return selected
+end
+
 function CommDKP:GetGuildRank(player)
 	local name, rank, rankIndex;
 	local guildSize;

@@ -42,6 +42,19 @@ core.ZoneList = {
 }
 
 core.L = {
+  MAIN                  = "Main",
+  SELECTION_IS_MAIN     = "Selected player is a main.",
+  REMOVED               = "Removed",
+  AS_AN_ALT             = "as an alt",
+  ALT_NOT_FOUND         = "Alt not found.",
+  ALT_IS_IN_DATABASE    = "Alt is already in the database.",
+  REMOVE_TARGET_ALT     = "Remove Target as Alt",
+  REMOVE_TARGET_ALT_DESC= "Selct the alt of the player and click the butten. If the player is in the database as an alt, then the entry will be removed.",
+  ADD_TARGET_ALT        = "Add Target as Alt",
+  Add_TARGET_ALT_DESC   = "Select the alt of the player as your target. Select the main of the player in the dkp list. The selected player will be added as an alt.",
+  CLEAR_ALTS            = "Clear Alts",
+  CLEAR_ALTS_DESC       = "Remove all alts from the player.",
+  CONFIRM_REMOVE_ALTS   = "Are you sure you'd like to remove all alts from ",
   ADD = "Add",
   ADDED = "Added",
   ADDGUILDCONFIRM = "Are you sure you'd like to add all guild members that are rank",

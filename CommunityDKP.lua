@@ -74,6 +74,23 @@ function CommDKP:Toggle()        -- toggles IsShown() state of CommDKP.UIConfig,
 	CommDKP:DKPTable_Update()
 end
 
+function CommDKP:isPlayerOrAlt(entry, name)
+	if entry.player == name then
+		return true
+	else
+		local isAlt = false
+		if entry.alts then
+			for curAlt = 1, #entry.alts do
+				if entry.alts[curAlt] == name then
+					isAlt = true
+					break
+				end
+			end
+		end
+		return isAlt
+	end
+end
+
 ---------------------------------------
 -- Sort Function
 ---------------------------------------
@@ -122,7 +139,7 @@ function CommDKP:FilterDKPTable(sort, reset)          -- filters core.WorkingTab
 				local name,_,_,_,_,_,_,_,online = GetGuildRosterInfo(i)
 				name = strsub(name, 1, string.find(name, "-")-1)
 				
-				if name == v.player then
+				if CommDKP:isPlayerOrAlt(v, name) then
 					IsOnline = online;
 					break;
 				end
@@ -132,9 +149,9 @@ function CommDKP:FilterDKPTable(sort, reset)          -- filters core.WorkingTab
 			if CommDKP.ConfigTab1.checkBtn[10]:GetChecked() or CommDKP.ConfigTab1.checkBtn[12]:GetChecked() then
 				for i=1, 40 do
 					tempName,_,_,_,_,tempClass = GetRaidRosterInfo(i)
-					if tempName and tempName == v.player and CommDKP.ConfigTab1.checkBtn[10]:GetChecked() then
+					if tempName and CommDKP:isPlayerOrAlt(v, name) and CommDKP.ConfigTab1.checkBtn[10]:GetChecked() then
 						tinsert(core.WorkingTable, v)
-					elseif tempName and tempName == v.player and CommDKP.ConfigTab1.checkBtn[12]:GetChecked() then
+					elseif tempName and CommDKP:isPlayerOrAlt(v, name) and CommDKP.ConfigTab1.checkBtn[12]:GetChecked() then
 						InRaid = true;
 					end
 				end

@@ -758,7 +758,20 @@ function CommDKP:DKPTable_Update()
 				CommDKP:GetTable(CommDKP_DKPTable, true)[SetRank[1][1]].rank = rankIndex or 20;
 				CommDKP:GetTable(CommDKP_DKPTable, true)[SetRank[1][1]].rankName = rank or "None";
 			end
-			row.DKPInfo[1]:SetText(core.WorkingTable[index].player)
+			
+			local playerName = core.WorkingTable[index].player
+			if core.WorkingTable[index].alts and 0 ~= #core.WorkingTable[index].alts then
+				playerName = playerName.." ("
+				for curAlt = 1, #core.WorkingTable[index].alts do
+					if curAlt ~= 1 then
+						playerName = playerName..", "
+					end
+					playerName = playerName..core.WorkingTable[index].alts[curAlt]
+				end
+				playerName = playerName..")"
+			end
+			row.DKPInfo[1]:SetText(playerName)
+
 			row.DKPInfo[1].rowCounter:SetText(index)
 			row.DKPInfo[1]:SetTextColor(c.r, c.g, c.b, 1)
 			

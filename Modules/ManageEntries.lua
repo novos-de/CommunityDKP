@@ -11,7 +11,7 @@ local function Remove_Entries()
 	local deleted = {};
 
 	for i=1, #core.SelectedData do
-		local search = CommDKP:Table_Search(CommDKP:GetTable(CommDKP_DKPTable, true), core.SelectedData[i]["player"]);
+		local search = CommDKP:Table_Search(CommDKP:GetTable(CommDKP_DKPTable, true), core.SelectedData[i]["player"], "player");
 		local flag = false -- flag = only create archive entry if they appear anywhere in the history. If there's no history, there's no reason anyone would have it.
 		local curTime = time()
 
@@ -219,50 +219,153 @@ local function AddGuildToDKPTable(rank, level)
 	end
 end
 
-local function AddTargetToDKPTable()
-	local name = UnitName("target");
-	local _,class = UnitClass("target");
+function CommDKP:AddAlt(player, alt, send, team)
 	local c;
-	local curTime = time()
-	local entities = {}
+	local _,class = UnitClass("target");
+	local c = CommDKP:GetCColors(class);
+	local team = team or CommDKP:GetCurrentTeamIndex();
+	local searchAlt = CommDKP:Table_Search(CommDKP:GetTable(CommDKP_DKPTable, true, team), alt)
+	
+	if searchAlt then
+		CommDKP:Print(L["ALT_IS_IN_DATABASE"])
+		return
+	end
 
-	local search = CommDKP:Table_Search(CommDKP:GetTable(CommDKP_DKPTable, true), name)
+	local search = CommDKP:Table_Search(CommDKP:GetTable(CommDKP_DKPTable, true, team), player)
+
+	if search then
+		local alts = CommDKP:GetTable(CommDKP_DKPTable, true, team)[search[1][1]].alts
+		if nil == alts then
+			alts = {}
+		end
+		table.insert(alts, alt)
+
+		CommDKP:DKPTable_Set(player, "alts", alts)
+		CommDKP:Print(L["ADDED"].."|r |c"..c.hex..alt.."|r "..L["AS_AN_ALT"]..".")
+
+		if send then
+			CommDKP.Sync:SendData("CommDKPAddAlt", {player, alt})
+		end
+	end
+end
+
+local function AddTargetAsAlt()
+	local name = UnitName("target");
+	if #core.SelectedData ~= 1 then
+		CommDKP:Print(" Nothing or more than one player selected.")
+		return
+	end
+
+	CommDKP:AddAlt(core.SelectedData[1]["player"], name, true)
+end
+
+function CommDKP:RemoveAlt(alt, send, team)
+	local _,class = UnitClass("target");
+	local c = CommDKP:GetCColors(class);
+	local team = team or CommDKP:GetCurrentTeamIndex();
+	local search = CommDKP:Table_Search(CommDKP:GetTable(CommDKP_DKPTable, true, team), alt)
+
+	if search then
+		if CommDKP:GetTable(CommDKP_DKPTable, true, team)[search[1][1]].player == alt then
+			CommDKP:Print(L["SELECTION_IS_MAIN"])
+			return
+		end
+		local alts = CommDKP:GetTable(CommDKP_DKPTable, true, team)[search[1][1]].alts
+		for k,v in pairs(alts) do
+			if v == alt then
+				table.remove(alts, k)
+				break
+			end
+		end
+
+		CommDKP:DKPTable_Set(CommDKP:GetTable(CommDKP_DKPTable, true, team)[search[1][1]].player, "alts", alts)
+		CommDKP:Print(L["REMOVED"].."|r |c"..c.hex..alt.."|r "..L["AS_AN_ALT"]..".")
+
+		if send then
+			CommDKP.Sync:SendData("CommDKPRemAlt", {alt})
+		end
+	else
+		CommDKP:Print(L["ALT_NOT_FOUND"])
+	end
+end
+
+local function RemoveTargetAsAlt()
+    local name = UnitName("target")
+
+    CommDKP:RemoveAlt(name, true)
+end
+
+local function ClearAlts()
+    for i=1, #core.SelectedData do
+        local search = CommDKP:Table_Search(CommDKP:GetTable(CommDKP_DKPTable, true), core.SelectedData[i].player)
+
+        if search then
+			local alts = CommDKP:GetTable(CommDKP_DKPTable, true)[search[1][1]].alts
+			local c = CommDKP:GetCColors(CommDKP:GetTable(CommDKP_DKPTable, true)[search[1][1]].class);
+            for k,v in pairs(alts) do
+                CommDKP.Sync:SendData("CommDKPRemAlt", {v})
+                CommDKP:Print(L["REMOVED"].." |c"..c.hex..v.."|r "..L["AS_AN_ALT"]..".")
+            end
+            CommDKP:DKPTable_Set(CommDKP:GetTable(CommDKP_DKPTable, true)[search[1][1]].player, "alts", {})
+        end
+    end
+end
+
+function CommDKP:AddPlayer(name, class, curTime, send, team)
+	local c;
+	local team = team or CommDKP:GetCurrentTeamIndex();
+	local entities = {};
+
+	local search = CommDKP:Table_Search(CommDKP:GetTable(CommDKP_DKPTable, true, team), name);
 	local profile = CommDKP:GetDefaultEntity();
 	
 	profile.player=name;
 	profile.class=class;
 
 	if not search then
-		tinsert(CommDKP:GetTable(CommDKP_DKPTable, true), profile);
+		tinsert(CommDKP:GetTable(CommDKP_DKPTable, true, team), profile);
 		tinsert(entities, profile);
-		CommDKP:GetTable(CommDKP_Profiles, true)[name] = profile;
+		CommDKP:GetTable(CommDKP_Profiles, true, team)[name] = profile;
 
-		CommDKP:FilterDKPTable(core.currentSort, "reset")
-		c = CommDKP:GetCColors(class)
-		CommDKP:Print("["..CommDKP:GetTeamName(CommDKP:GetCurrentTeamIndex()).."] "..L["ADDED"].." |c"..c.hex..name.."|r")
+		CommDKP:FilterDKPTable(core.currentSort, "reset");
+		c = CommDKP:GetCColors(class);
+		CommDKP:Print("["..CommDKP:GetTeamName(team).."] "..L["ADDED"].." |c"..c.hex..name.."|r");
 
 		if addedUsers == nil then
-			addedUsers = "|c"..c.hex..name.."|r"; 
+			addedUsers = "|c"..c.hex..name.."|r";
 		else
-			addedUsers = addedUsers..", |c"..c.hex..name.."|r"
+			addedUsers = addedUsers..", |c"..c.hex..name.."|r";
 		end
 
 
 		if core.ClassGraph then
-			CommDKP:ClassGraph_Update()
+			CommDKP:ClassGraph_Update();
 		else
-			CommDKP:ClassGraph()
+			CommDKP:ClassGraph();
 		end
-		if CommDKP:GetTable(CommDKP_Archive, true)[name] and CommDKP:GetTable(CommDKP_Archive, true)[name].deleted then
-			profile.dkp = CommDKP:GetTable(CommDKP_Archive, true)[name].dkp
-			profile.lifetime_gained = CommDKP:GetTable(CommDKP_Archive, true)[name].lifetime_gained
-			profile.lifetime_spent = CommDKP:GetTable(CommDKP_Archive, true)[name].lifetime_spent
-			CommDKP:GetTable(CommDKP_Archive, true)[name].deleted = "Recovered"
-			CommDKP:GetTable(CommDKP_Archive, true)[name].edited = curTime
-			CommDKP:Print(L["YOUHAVERECOVERED"])
+		if CommDKP:GetTable(CommDKP_Archive, true, team)[name] and CommDKP:GetTable(CommDKP_Archive, true, team)[name].deleted then
+			profile.dkp = CommDKP:GetTable(CommDKP_Archive, true, team)[name].dkp;
+			profile.lifetime_gained = CommDKP:GetTable(CommDKP_Archive, true, team)[name].lifetime_gained;
+			profile.lifetime_spent = CommDKP:GetTable(CommDKP_Archive, true, team)[name].lifetime_spent;
+			CommDKP:GetTable(CommDKP_Archive, true, team)[name].deleted = "Recovered";
+			CommDKP:GetTable(CommDKP_Archive, true, team)[name].edited = curTime;
+			CommDKP:Print(L["YOUHAVERECOVERED"]);
 		end
-		CommDKP.Sync:SendData("CommDKPAddUsers", CopyTable(entities))
+		
+		if send then
+			CommDKP.Sync:SendData("CommDKPAddMain", {name, class, curTime});
+		end
+
+		CommDKP.Sync:SendData("CommDKPAddUsers", CopyTable(entities));
 	end
+end
+
+local function AddTargetToDKPTable()
+	local name = UnitName("target");
+	local _,class = UnitClass("target");
+	local curTime = time()
+
+	CommDKP:AddPlayer(name, class, curTime, true)
 end
 
 function CommDKP:CopyProfileToTeam(row, team)
@@ -560,23 +663,7 @@ function CommDKP:ManageEntries()
 		CommDKP.ConfigTab3.remove_entries:SetScript("OnClick", 
 			function ()	
 				if #core.SelectedData > 0 then
-					local selected = L["CONFIRMREMOVESELECT"]..": \n\n";
-
-					for i=1, #core.SelectedData do
-						local classSearch = CommDKP:Table_Search(CommDKP:GetTable(CommDKP_DKPTable, true), core.SelectedData[i].player)
-
-						if classSearch then
-							c = CommDKP:GetCColors(CommDKP:GetTable(CommDKP_DKPTable, true)[classSearch[1][1]].class)
-						else
-							c = { hex="ffffffff" }
-						end
-						if i == 1 then
-							selected = selected.."|c"..c.hex..core.SelectedData[i].player.."|r"
-						else
-							selected = selected..", |c"..c.hex..core.SelectedData[i].player.."|r"
-						end
-					end
-					selected = selected.."?"
+					local selected = L["CONFIRMREMOVESELECT"]..": \n\n"..CommDKP:ListSelected().."?";
 
 					StaticPopupDialogs["REMOVE_ENTRIES"] = {
 					text = selected,
@@ -854,9 +941,128 @@ function CommDKP:ManageEntries()
 					preferredIndex = 3,
 				}
 				StaticPopup_Show ("PURGE_CONFIRM")
-			end
-		)
+			end)
 
+			CommDKP.ConfigTab3.AddTargetAsAlt = self:CreateButton("TOPLEFT", CommDKP.ConfigTab3, "TOPLEFT", 0, 0, L["ADD_TARGET_ALT"]);
+			CommDKP.ConfigTab3.AddTargetAsAlt:SetSize(120,25);
+			CommDKP.ConfigTab3.AddTargetAsAlt:ClearAllPoints()
+			CommDKP.ConfigTab3.AddTargetAsAlt:SetPoint("TOP", CommDKP.ConfigTab3.AddGuildToDKP, "BOTTOM", 0, -57)
+			CommDKP.ConfigTab3.AddTargetAsAlt:SetScript("OnEnter", function(self)
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+				GameTooltip:SetText(L["ADD_TARGET_ALT"], 0.25, 0.75, 0.90, 1, true);
+				GameTooltip:AddLine(L["Add_TARGET_ALT_DESC"], 1.0, 1.0, 1.0, true);
+				GameTooltip:Show();
+			end)
+			CommDKP.ConfigTab3.AddTargetAsAlt:SetScript("OnLeave", function(self)
+				GameTooltip:Hide()
+			end)			
+			CommDKP.ConfigTab3.AddTargetAsAlt:SetScript("OnClick", function ()	-- confirmation dialog to add user(s)
+				if UnitIsPlayer("target") == true then
+					StaticPopupDialogs["ADD_TARGET_DKP"] = {
+						text = L["CONFIRMADDTARGET"].." "..UnitName("target").." "..L["AS_AN_ALT"]..".",
+						button1 = L["YES"],
+						button2 = L["NO"],
+						OnAccept = function()
+							AddTargetAsAlt()
+						end,
+						timeout = 0,
+						whileDead = true,
+						hideOnEscape = true,
+						preferredIndex = 3,
+					}
+					StaticPopup_Show ("ADD_TARGET_DKP")
+				else
+					StaticPopupDialogs["ADD_TARGET_DKP"] = {
+						text = L["NOPLAYERTARGETED"],
+						button1 = L["OK"],
+						timeout = 0,
+						whileDead = true,
+						hideOnEscape = true,
+						preferredIndex = 3,
+					}
+					StaticPopup_Show ("ADD_TARGET_DKP")
+				end
+			end);
+			CommDKP.ConfigTab3.RemoveTargetAsAlt = self:CreateButton("TOPLEFT", CommDKP.ConfigTab3, "TOPLEFT", 0, 0, L["REMOVE_TARGET_ALT"]);
+			CommDKP.ConfigTab3.RemoveTargetAsAlt:SetSize(120,25);
+			CommDKP.ConfigTab3.RemoveTargetAsAlt:ClearAllPoints()
+			CommDKP.ConfigTab3.RemoveTargetAsAlt:SetPoint("LEFT", CommDKP.ConfigTab3.AddTargetAsAlt, "RIGHT", 20, 0)
+			CommDKP.ConfigTab3.RemoveTargetAsAlt:SetScript("OnEnter", function(self)
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+				GameTooltip:SetText(L["REMOVE_TARGET_ALT"], 0.25, 0.75, 0.90, 1, true);
+				GameTooltip:AddLine(L["REMOVE_TARGET_ALT_DESC"], 1.0, 1.0, 1.0, true);
+				GameTooltip:Show();
+			end)
+			CommDKP.ConfigTab3.RemoveTargetAsAlt:SetScript("OnLeave", function(self)
+				GameTooltip:Hide()
+			end)
+			CommDKP.ConfigTab3.RemoveTargetAsAlt:SetScript("OnClick", function ()	-- confirmation dialog to remove user(s)
+				if UnitIsPlayer("target") == true then
+					StaticPopupDialogs["ADD_TARGET_DKP"] = {
+						text = L["CONFIRMREMOVESELECT"].." "..UnitName("target").." "..L["AS_AN_ALT"]..".",
+						button1 = L["YES"],
+						button2 = L["NO"],
+						OnAccept = function()
+							RemoveTargetAsAlt()
+						end,
+						timeout = 0,
+						whileDead = true,
+						hideOnEscape = true,
+						preferredIndex = 3,
+					}
+					StaticPopup_Show ("ADD_TARGET_DKP")
+				else
+					StaticPopupDialogs["ADD_TARGET_DKP"] = {
+						text = L["NOPLAYERTARGETED"],
+						button1 = L["OK"],
+						timeout = 0,
+						whileDead = true,
+						hideOnEscape = true,
+						preferredIndex = 3,
+					}
+					StaticPopup_Show ("ADD_TARGET_DKP")
+				end
+			end);
+			CommDKP.ConfigTab3.ClearAlts = self:CreateButton("TOPLEFT", CommDKP.ConfigTab3, "TOPLEFT", 0, 0, L["CLEAR_ALTS"]);
+			CommDKP.ConfigTab3.ClearAlts:SetSize(120,25);
+			CommDKP.ConfigTab3.ClearAlts:ClearAllPoints()
+			CommDKP.ConfigTab3.ClearAlts:SetPoint("TOP", CommDKP.ConfigTab3.RemoveTargetAsAlt, "BOTTOM", 0, -16)
+			CommDKP.ConfigTab3.ClearAlts:SetScript("OnEnter", function(self)
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+				GameTooltip:SetText(L["CLEAR_ALTS"], 0.25, 0.75, 0.90, 1, true);
+				GameTooltip:AddLine(L["CLEAR_ALTS_DESC"], 1.0, 1.0, 1.0, true);
+				GameTooltip:Show();
+			end)
+			CommDKP.ConfigTab3.ClearAlts:SetScript("OnLeave", function(self)
+				GameTooltip:Hide()
+			end)
+			CommDKP.ConfigTab3.ClearAlts:SetScript("OnClick", function ()	-- confirmation dialog to clear alt(s)
+				if  #core.SelectedData > 0 then
+					StaticPopupDialogs["ADD_TARGET_DKP"] = {
+						text = L["CONFIRM_REMOVE_ALTS"]..": \n\n"..CommDKP:ListSelected().."?",
+						button1 = L["YES"],
+						button2 = L["NO"],
+						OnAccept = function()
+							ClearAlts()
+						end,
+						timeout = 0,
+						whileDead = true,
+						hideOnEscape = true,
+						preferredIndex = 3,
+					}
+					StaticPopup_Show ("ADD_TARGET_DKP")
+				else
+					StaticPopupDialogs["ADD_TARGET_DKP"] = {
+						text = L["NOENTRIESSELECTED"],
+						button1 = L["OK"],
+						timeout = 0,
+						whileDead = true,
+						hideOnEscape = true,
+						preferredIndex = 3,
+					}
+					StaticPopup_Show ("ADD_TARGET_DKP")
+				end
+			end);
 	----------------------------------
 	-- White list container
 	----------------------------------

@@ -171,6 +171,18 @@ function CommDKP_CHAT_MSG_WHISPER(text, ...)
         return
       end
 
+      -- Check if this is an alt and alter the name
+			local search = CommDKP:Table_Search(CommDKP:GetTable(CommDKP_DKPTable, true), name)
+			local displayName = name;
+			local playerName = name;
+
+			if search then
+        if name ~= CommDKP:GetTable(CommDKP_DKPTable, true)[search[1][1]].player then
+          displayName = name.."("..L["MAIN"]..": "..CommDKP:GetTable(CommDKP_DKPTable, true)[search[1][1]].player..")";
+          name = CommDKP:GetTable(CommDKP_DKPTable, true)[search[1][1]].player;
+				end
+			end
+
       if (tonumber(cmd) and (core.BiddingWindow.maxBid == nil or tonumber(cmd) <= core.BiddingWindow.maxBid:GetNumber() or core.BiddingWindow.maxBid:GetNumber() == 0)) or ((mode == "Static Item Values" or (mode == "Zero Sum" and core.DB.modes.ZeroSumBidType == "Static")) and not cmd) then
         if dkp then
           if (cmd and cmd <= dkp) or (core.DB.modes.SubZeroBidding == true and dkp >= 0) or (core.DB.modes.SubZeroBidding == true and core.DB.modes.AllowNegativeBidders == true) or (mode == "Static Item Values" and dkp > 0 and (dkp > core.BiddingWindow.cost:GetNumber() or core.DB.modes.SubZeroBidding == true or core.DB.modes.costvalue == "Percent")) or ((mode == "Zero Sum" and core.DB.modes.ZeroSumBidType == "Static") and not cmd) then
@@ -193,7 +205,7 @@ function CommDKP_CHAT_MSG_WHISPER(text, ...)
                   if not core.DB.modes.AnnounceBidName then
                     SendChatMessage(L["NEWHIGHBID"].." "..cmd.." DKP", msgTarget)
                   else
-                    SendChatMessage(L["NEWHIGHBIDDER"].." "..name.." ("..cmd.." DKP)", msgTarget)
+                    SendChatMessage(L["NEWHIGHBIDDER"].." "..displayName.." ("..cmd.." DKP)", msgTarget)
                   end
                 end
                 if core.DB.modes.DeclineLowerBids and Bids_Submitted[1] and cmd <= Bids_Submitted[1].bid then   -- declines bids lower than highest bid
@@ -223,7 +235,7 @@ function CommDKP_CHAT_MSG_WHISPER(text, ...)
                   if not core.DB.modes.AnnounceBidName then
                     SendChatMessage(L["NEWHIGHBID"].." "..dkp.." DKP", msgTarget)
                   else
-                    SendChatMessage(L["NEWHIGHBIDDER"].." "..name.." ("..dkp.." DKP)", msgTarget)
+                    SendChatMessage(L["NEWHIGHBIDDER"].." "..displayName.." ("..dkp.." DKP)", msgTarget)
                   end
                 end
                 table.insert(Bids_Submitted, {player=name, dkp=dkp})
@@ -256,7 +268,7 @@ function CommDKP_CHAT_MSG_WHISPER(text, ...)
           response = L["BIDDENIEDINVALID"]
         end
       end
-      SendChatMessage(response, "WHISPER", nil, name)
+      SendChatMessage(response, "WHISPER", nil, displayName)
     else
       SendChatMessage(L["NOBIDINPROGRESS"], "WHISPER", nil, name)
     end

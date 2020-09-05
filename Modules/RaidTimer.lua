@@ -33,7 +33,7 @@ local function SecondsToClock(seconds)
 end
 
 function CommDKP:AwardPlayer(name, amount)
-	local search = CommDKP:Table_Search(CommDKP:GetTable(CommDKP_DKPTable, true), name, "player")
+	local search = CommDKP:Table_Search(CommDKP:GetTable(CommDKP_DKPTable, true), name)
 	local path;
 
 	if search then
@@ -64,8 +64,9 @@ local function AwardRaid(amount, reason)
 		local isSameZone = zone == GetRealZoneText()
 
 		if search_DKP and (not OnlineOnly or online) and (not limitToZone or isSameZone) then
-			CommDKP:AwardPlayer(tempName, amount)
-			tempList = tempList..tempName..",";
+			local realName = CommDKP:GetTable(CommDKP_DKPTable, true)[search_DKP[1][1]].player
+			CommDKP:AwardPlayer(realName, amount)
+			tempList = tempList..realName..",";
 		end
 	end
 
