@@ -169,7 +169,7 @@ core.EncounterList = {      -- Event IDs must be in the exact same order as core
 core.CommDKPUI = {}        -- global storing entire Configuration UI to hide/show UI
 core.MonVersion = "v3.2.8";
 core.BuildNumber = 30208;
-core.ReleaseNumber = 68
+core.ReleaseNumber = 69
 core.defaultTable = "__default";
 core.SemVer = core.MonVersion.."-r"..tostring(core.ReleaseNumber);
 core.UpgradeSchema = false;
@@ -506,10 +506,12 @@ end
 
 function CommDKP:CreateContainer(parent, name, header)
 
+	local f;
+
 	if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
-		local f = CreateFrame("Frame", "CommDKP"..name, parent);
+		f = CreateFrame("Frame", "CommDKP"..name, parent);
 	elseif WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC then
-		local f = CreateFrame("Frame", "CommDKP"..name, parent, BackdropTemplateMixin and "BackdropTemplate" or nil);
+		f = CreateFrame("Frame", "CommDKP"..name, parent, BackdropTemplateMixin and "BackdropTemplate" or nil);
 	end
 
 	
