@@ -956,8 +956,8 @@ if GetLocale() == "ruRU" then
     MIGRATIONCOMPLETED    = "Миграция завершена.|n|nПожалуйста отключите MonolithDKP и перезагрузите интерфейс.",
 
     --TODO TRANSLATE:
-    CHANGELOG1 = "CommunityDKP - v3.2.8-r69-bcc",
-    CHANGELOG2 = " - fixed UI for classic era realms",
+    CHANGELOG1 = "CommunityDKP - v3.2.9-r70-bcc",
+    CHANGELOG2 = " - updated ACE to its latest alpha version",,
     CHANGELOG3 = "",
     CHANGELOG4 = "",
     CHANGELOG5 = "",
