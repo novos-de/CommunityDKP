@@ -7,6 +7,8 @@ local _, core = ...;
 local _G = _G;
 local L = core.L;
 
+local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0");
+
 core.CommDKP = {};       -- UI Frames global
 core.CommDKPApi = { __version = 1, pricelist = nil }
 local CommDKP = core.CommDKP;
