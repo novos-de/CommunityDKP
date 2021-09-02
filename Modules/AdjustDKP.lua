@@ -211,7 +211,8 @@ function CommDKP:AdjustDKPTab_Create()
 
 	-- Reason DROPDOWN box 
 	-- Create the dropdown, and configure its appearance
-	CommDKP.ConfigTab2.reasonDropDown = CreateFrame("FRAME", "CommDKPConfigReasonDropDown", CommDKP.ConfigTab2, "CommunityDKPUIDropDownMenuTemplate")
+	CommDKP.ConfigTab2.reasonDropDown = LibDD:Create_UIDropDownMenu("CommDKPConfigReasonDropDown", CommDKP.ConfigTab2);
+	--CommDKP.ConfigTab2.reasonDropDown = CreateFrame("FRAME", "CommDKPConfigReasonDropDown", CommDKP.ConfigTab2, "CommunityDKPUIDropDownMenuTemplate")
 	CommDKP.ConfigTab2.reasonDropDown:SetPoint("TOPLEFT", CommDKP.ConfigTab2.description, "BOTTOMLEFT", -23, -60)
 	LibDD:UIDropDownMenu_SetWidth(CommDKP.ConfigTab2.reasonDropDown, 150)
 	LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab2.reasonDropDown, L["SELECTREASON"])
@@ -266,7 +267,7 @@ function CommDKP:AdjustDKPTab_Create()
 			CommDKP.ConfigTab2.otherReason:Hide();
 		end
 
-		CloseDropDownMenus()
+		LibDD:CloseDropDownMenus()
 	end
 
 	CommDKP.ConfigTab2.reasonDropDown:SetScript("OnEnter", function(self)
@@ -327,7 +328,8 @@ function CommDKP:AdjustDKPTab_Create()
 
 	-- Boss Killed Dropdown - Hidden unless "Boss Kill Bonus" or "New Boss Kill Bonus" is selected
 	-- Killing a boss on the list will auto select that boss
-	CommDKP.ConfigTab2.BossKilledDropdown = CreateFrame("FRAME", "CommDKPBossKilledDropdown", CommDKP.ConfigTab2, "CommunityDKPUIDropDownMenuTemplate")
+	--CommDKP.ConfigTab2.BossKilledDropdown = CreateFrame("FRAME", "CommDKPBossKilledDropdown", CommDKP.ConfigTab2, "CommunityDKPUIDropDownMenuTemplate")
+	CommDKP.ConfigTab2.BossKilledDropdown = LibDD:Create_UIDropDownMenu("CommDKPBossKilledDropdown", CommDKP.ConfigTab2);
 	CommDKP.ConfigTab2.BossKilledDropdown:SetPoint("TOPLEFT", CommDKP.ConfigTab2.reasonDropDown, "BOTTOMLEFT", 0, 2)
 	CommDKP.ConfigTab2.BossKilledDropdown:Hide()
 	LibDD:UIDropDownMenu_SetWidth(CommDKP.ConfigTab2.BossKilledDropdown, 210)
@@ -429,7 +431,7 @@ function CommDKP:AdjustDKPTab_Create()
 			CommDKP.ConfigTab2.reasonDropDown:SetValue(L["BOSSKILLBONUS"])
 		end
 		LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, core.CurrentRaidZone..": "..core.LastKilledBoss)
-		CloseDropDownMenus()
+		LibDD:CloseDropDownMenus()
 	end
 
 	-- Add DKP Edit Box

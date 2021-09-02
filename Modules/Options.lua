@@ -1377,7 +1377,8 @@ function CommDKP:Options()
   end)
 
   -- Chatframe Selection 
-  CommDKP.ConfigTab4.ChatFrame = CreateFrame("FRAME", "CommDKPChatFrameSelectDropDown", CommDKP.ConfigTab4, "CommunityDKPUIDropDownMenuTemplate")
+  --CommDKP.ConfigTab4.ChatFrame = CreateFrame("FRAME", "CommDKPChatFrameSelectDropDown", CommDKP.ConfigTab4, "CommunityDKPUIDropDownMenuTemplate")
+  CommDKP.ConfigTab4.ChatFrame = LibDD:Create_UIDropDownMenu("CommDKPChatFrameSelectDropDown", CommDKP.ConfigTab4);
   if not core.DB.defaults.ChatFrames then core.DB.defaults.ChatFrames = {} end
 
   LibDD:UIDropDownMenu_Initialize(CommDKP.ConfigTab4.ChatFrame, function(self, level, menuList)
@@ -1403,7 +1404,7 @@ function CommDKP:Options()
 
   function CommDKP.ConfigTab4.ChatFrame:SetValue(arg1)
     core.DB.defaults.ChatFrames[arg1] = not core.DB.defaults.ChatFrames[arg1]
-    CloseDropDownMenus()
+    LibDD:CloseDropDownMenus()
   end
 
 

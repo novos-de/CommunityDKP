@@ -174,7 +174,8 @@ function CommDKP:CreateSortBox()
 
 	-- Create the dropdown, and configure its appearance
 	if not sortDropdown then
-		sortDropdown = CreateFrame("FRAME", "CommDKPConfigFilterNameDropDown", CommDKP.ConfigTab5, "CommunityDKPUIDropDownMenuTemplate")
+		--sortDropdown = CreateFrame("FRAME", "CommDKPConfigFilterNameDropDown", CommDKP.ConfigTab5, "CommunityDKPUIDropDownMenuTemplate")
+		sortDropdown = LibDD:Create_UIDropDownMenu("CommDKPConfigFilterNameDropDown", CommDKP.ConfigTab5);
 	end
 
 	-- Create and bind the initialization function to the dropdown menu
@@ -238,7 +239,7 @@ function CommDKP:CreateSortBox()
 		-- level 2 to handle players and items
 		elseif (level or 2) == 2 then
 
-			if UIDROPDOWNMENU_MENU_VALUE == L["PLAYERS"] then
+			if L_UIDROPDOWNMENU_MENU_VALUE == L["PLAYERS"] then
 
 				for i=1, ceil(#PlayerList/displayLimit) do 
 					local max = i*displayLimit;
@@ -253,7 +254,7 @@ function CommDKP:CreateSortBox()
 					LibDD:UIDropDownMenu_AddButton(dropDownMenuItem, level)
 				end
 
-			elseif UIDROPDOWNMENU_MENU_VALUE == L["ITEMS"] then
+			elseif L_UIDROPDOWNMENU_MENU_VALUE == L["ITEMS"] then
 
 				for i=1, ceil(#ItemList/displayLimit) do 
 					local max = i*displayLimit;
@@ -272,7 +273,7 @@ function CommDKP:CreateSortBox()
 		else -- level 3
 
 			dropDownMenuItem.func = self.FilterSetValue
-			if UIDROPDOWNMENU_MENU_VALUE == L["PLAYERS"] then
+			if L_UIDROPDOWNMENU_MENU_VALUE == L["PLAYERS"] then
 
 				--for i=playersRange[menuList], playersRange[menuList]+(displayLimit-1) do
 				-- depending on menuList value from higher level this should give
@@ -302,7 +303,7 @@ function CommDKP:CreateSortBox()
 					end
 				end
 				
-			elseif UIDROPDOWNMENU_MENU_VALUE == L["ITEMS"] then
+			elseif L_UIDROPDOWNMENU_MENU_VALUE == L["ITEMS"] then
 
 				for  i=1+(menuList-1)*displayLimit, 1+(menuList-1)*displayLimit+(displayLimit-1) do
 					if ItemList[i] then
@@ -371,7 +372,7 @@ function CommDKP:CreateSortBox()
 		CommDKP:LootHistory_Update(newValue)
 	end
     
-    CloseDropDownMenus()
+    LibDD:CloseDropDownMenus()
   end
 
 end

@@ -372,7 +372,8 @@ function CommDKP:CreateMenu()
 	SortButtons.class.t:SetText(L["CLASS"]); --]]
 
 	-- center column dropdown (class, rank, spec etc..)
-	SortButtons.class.t = CreateFrame("FRAME", "CommDKPSortColDropdown", SortButtons.class, "CommunityDKPTableHeaderDropDownMenuTemplate")
+	--SortButtons.class.t = CreateFrame("FRAME", "CommDKPSortColDropdown", SortButtons.class, "CommunityDKPTableHeaderDropDownMenuTemplate")
+	SortButtons.class.t = LibDD:Create_UIDropDownMenu("CommDKPSortColDropdown", SortButtons.class)
 	SortButtons.class.t:SetPoint("CENTER", SortButtons.class, "CENTER", 4, -3)
 	LibDD:UIDropDownMenu_JustifyText(SortButtons.class.t, "CENTER")
 	LibDD:UIDropDownMenu_SetWidth(SortButtons.class.t, 80)
@@ -400,7 +401,7 @@ function CommDKP:CreateMenu()
 		LibDD:UIDropDownMenu_SetText(SortButtons.class.t, arg2)
 		CommDKP:SortDKPTable(newValue, "reset")
 		core.currentSort = newValue;
-		CloseDropDownMenus()
+		LibDD:CloseDropDownMenus()
 	end
 	SortButtons.dkp.t = SortButtons.dkp:CreateFontString(nil, "OVERLAY")
 	SortButtons.dkp.t:SetFontObject("CommDKPNormal")
@@ -506,7 +507,8 @@ function CommDKP:CreateMenu()
 	-- Team view changer Drop Down
 	------------------------------
 
-		CommDKP.UIConfig.TeamViewChangerDropDown = CreateFrame("FRAME", "CommDKPConfigReasonDropDown", CommDKP.UIConfig, "CommunityDKPUIDropDownMenuTemplate")
+		--CommDKP.UIConfig.TeamViewChangerDropDown = CreateFrame("FRAME", "CommDKPConfigReasonDropDown", CommDKP.UIConfig, "CommunityDKPUIDropDownMenuTemplate")
+		CommDKP.UIConfig.TeamViewChangerDropDown = LibDD:Create_UIDropDownMenu("CommDKPConfigReasonDropDown", CommDKP.UIConfig);
 		--CommDKP.ConfigTab3.TeamManagementContainer.TeamListDropDown:ClearAllPoints()
 		CommDKP.UIConfig.TeamViewChangerDropDown:SetPoint("BOTTOMLEFT", CommDKP.UIConfig, "BOTTOMLEFT", 340, 4)
 		-- tooltip on mouseOver
@@ -569,7 +571,7 @@ function CommDKP:CreateMenu()
 					StaticPopup_Show ("RAID_IN_PROGRESS")
 				end
 			else
-				CloseDropDownMenus()
+				LibDD:CloseDropDownMenus()
 			end
 		end
 

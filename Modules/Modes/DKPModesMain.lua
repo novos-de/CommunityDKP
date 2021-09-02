@@ -52,7 +52,8 @@ function CommDKP:DKPModes_Main()
   end
 
 
-  f.DKPModesMain.ModesDropDown = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain, "CommunityDKPUIDropDownMenuTemplate")
+  --f.DKPModesMain.ModesDropDown = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain, "CommunityDKPUIDropDownMenuTemplate")
+  f.DKPModesMain.ModesDropDown = LibDD:Create_UIDropDownMenu("CommDKPModeSelectDropDown", f.DKPModesMain);
 
   -- Create and bind the initialization function to the dropdown menu
     LibDD:UIDropDownMenu_Initialize(f.DKPModesMain.ModesDropDown, function(self, level, menuList)
@@ -202,7 +203,7 @@ function CommDKP:DKPModes_Main()
     end
 
     LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ModesDropDown, LocalMode)
-    CloseDropDownMenus()
+    LibDD:CloseDropDownMenus()
   end
 
   f.DKPModesMain.ModesDropDown:SetScript("OnEnter", function(self)
@@ -221,7 +222,8 @@ function CommDKP:DKPModes_Main()
   f.DKPModesMain.ModeHeader:SetText(L["DKPMODES"])
 
   -- Rounding DROPDOWN box 
-  f.DKPModesMain.RoundDropDown = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain, "CommunityDKPUIDropDownMenuTemplate")
+  --f.DKPModesMain.RoundDropDown = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain, "CommunityDKPUIDropDownMenuTemplate")
+  f.DKPModesMain.RoundDropDown = LibDD:Create_UIDropDownMenu("CommDKPModeSelectDropDown", f.DKPModesMain);
 
   -- Create and bind the initialization function to the dropdown menu
     LibDD:UIDropDownMenu_Initialize(f.DKPModesMain.RoundDropDown, function(self, level, menuList)
@@ -249,7 +251,7 @@ function CommDKP:DKPModes_Main()
   function f.DKPModesMain.RoundDropDown:SetValue(newValue)
     core.DB.modes.rounding = newValue;
     LibDD:UIDropDownMenu_SetText(f.DKPModesMain.RoundDropDown, newValue)
-    CloseDropDownMenus()
+    LibDD:CloseDropDownMenus()
   end
 
   f.DKPModesMain.RoundDropDown:SetScript("OnLeave", function(self)
@@ -271,7 +273,8 @@ function CommDKP:DKPModes_Main()
   f.DKPModesMain.RoundHeader:SetText(L["DKPROUNDING"])
 
   -- MAX Bid button behavior
-  f.DKPModesMain.MaxBidBehaviorDropDown = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain, "CommunityDKPUIDropDownMenuTemplate")
+  --f.DKPModesMain.MaxBidBehaviorDropDown = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain, "CommunityDKPUIDropDownMenuTemplate")
+  f.DKPModesMain.MaxBidBehaviorDropDown = LibDD:Create_UIDropDownMenu("CommDKPModeSelectDropDown", f.DKPModesMain);
 
   -- Create and bind the initialization function to the dropdown menu
     LibDD:UIDropDownMenu_Initialize(f.DKPModesMain.MaxBidBehaviorDropDown, function(self, level, menuList)
@@ -301,7 +304,7 @@ function CommDKP:DKPModes_Main()
     else
       LibDD:UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, L["MAXBIDBEHAVIORMIN"])
     end
-    CloseDropDownMenus()
+    LibDD:CloseDropDownMenus()
   end
 
   f.DKPModesMain.MaxBidBehaviorDropDown:SetScript("OnLeave", function(self)
@@ -385,7 +388,8 @@ function CommDKP:DKPModes_Main()
     f.DKPModesMain.AntiSnipe.Header:SetText(L["ANTISNIPE"])
 
   -- Channels DROPDOWN box 
-  f.DKPModesMain.ChannelsDropDown = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain, "CommunityDKPUIDropDownMenuTemplate")
+  --f.DKPModesMain.ChannelsDropDown = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain, "CommunityDKPUIDropDownMenuTemplate")
+  f.DKPModesMain.ChannelsDropDown = LibDD:Create_UIDropDownMenu("CommDKPModeSelectDropDown", f.DKPModesMain);
 
   -- Create and bind the initialization function to the dropdown menu
     LibDD:UIDropDownMenu_Initialize(f.DKPModesMain.ChannelsDropDown, function(self, level, menuList)
@@ -418,7 +422,7 @@ function CommDKP:DKPModes_Main()
     end
 
     LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ChannelsDropDown, "Open Channels")
-    CloseDropDownMenus()
+    LibDD:CloseDropDownMenus()
   end
 
   f.DKPModesMain.ChannelsDropDown:SetScript("OnEnter", function(self)
@@ -438,7 +442,8 @@ function CommDKP:DKPModes_Main()
 
   -- Cost Auto Update Value DROPDOWN box 
   if not core.DB.modes.CostSelection then core.DB.modes.CostSelection = "Second Bidder" end
-  f.DKPModesMain.CostSelection = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain, "CommunityDKPUIDropDownMenuTemplate")
+  --f.DKPModesMain.CostSelection = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain, "CommunityDKPUIDropDownMenuTemplate")
+  f.DKPModesMain.CostSelection = LibDD:Create_UIDropDownMenu("CommDKPModeSelectDropDown", f.DKPModesMain);
   f.DKPModesMain.CostSelection:SetPoint("TOPLEFT", f.DKPModesMain.ChannelsDropDown, "BOTTOMLEFT", 0, -10)
 
   local LocalCostSel;
@@ -483,7 +488,7 @@ function CommDKP:DKPModes_Main()
     end
 
     LibDD:UIDropDownMenu_SetText(f.DKPModesMain.CostSelection, LocalCostSel)
-    CloseDropDownMenus()
+    LibDD:CloseDropDownMenus()
   end
 
   f.DKPModesMain.CostSelection:SetScript("OnEnter", function(self)
@@ -565,8 +570,8 @@ function CommDKP:DKPModes_Main()
     end
 
     -- ZeroSum Type DROPDOWN box 
-  f.DKPModesMain.ZeroSumType = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain, "CommunityDKPUIDropDownMenuTemplate")
-
+  --f.DKPModesMain.ZeroSumType = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain, "CommunityDKPUIDropDownMenuTemplate")
+  f.DKPModesMain.ZeroSumType = LibDD:Create_UIDropDownMenu("CommDKPModeSelectDropDown", f.DKPModesMain);
   -- Create and bind the initialization function to the dropdown menu
     LibDD:UIDropDownMenu_Initialize(f.DKPModesMain.ZeroSumType, function(self, level, menuList)
     
@@ -606,7 +611,7 @@ function CommDKP:DKPModes_Main()
     end
 
     LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ZeroSumType, newValue)
-    CloseDropDownMenus()
+    LibDD:CloseDropDownMenus()
   end
 
   f.DKPModesMain.ZeroSumType:SetScript("OnEnter", function(self)
@@ -630,8 +635,8 @@ function CommDKP:DKPModes_Main()
   end
 
   -- Item Cost Value DROPDOWN box 
-  f.DKPModesMain.ItemCostDropDown = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain, "CommunityDKPUIDropDownMenuTemplate")
-
+  --f.DKPModesMain.ItemCostDropDown = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain, "CommunityDKPUIDropDownMenuTemplate")
+  f.DKPModesMain.ItemCostDropDown = LibDD:Create_UIDropDownMenu("CommDKPModeSelectDropDown", f.DKPModesMain);
   -- Create and bind the initialization function to the dropdown menu
     LibDD:UIDropDownMenu_Initialize(f.DKPModesMain.ItemCostDropDown, 
     function(self, level, menuList)
@@ -670,7 +675,7 @@ function CommDKP:DKPModes_Main()
     end
 
     
-    CloseDropDownMenus()
+    LibDD:CloseDropDownMenus()
   end
 
   f.DKPModesMain.ItemCostDropDown:SetScript("OnEnter", function(self)
@@ -823,7 +828,8 @@ function CommDKP:DKPModes_Main()
         core.DB.modes.RollMode = "Default"
       end
 
-      f.DKPModesMain.RollContainer.RollBiddingModeDropdown = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain.RollContainer, "CommunityDKPUIDropDownMenuTemplate")
+      --f.DKPModesMain.RollContainer.RollBiddingModeDropdown = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f.DKPModesMain.RollContainer, "CommunityDKPUIDropDownMenuTemplate")
+      f.DKPModesMain.RollContainer.RollBiddingModeDropdown = LibDD:Create_UIDropDownMenu("CommDKPModeSelectDropDown", f.DKPModesMain.RollContainer);
 
       LibDD:UIDropDownMenu_Initialize(
         f.DKPModesMain.RollContainer.RollBiddingModeDropdown,
@@ -875,7 +881,7 @@ function CommDKP:DKPModes_Main()
           f.DKPModesMain.RollContainer.maxKarma.Header:Show()
         end
         LibDD:UIDropDownMenu_SetText(f.DKPModesMain.RollContainer.RollBiddingModeDropdown, core.DB.modes.RollMode);
-        CloseDropDownMenus()
+        LibDD:CloseDropDownMenus()
       end
 
       f.DKPModesMain.RollContainer.RollBiddingModeDropdown:SetScript(

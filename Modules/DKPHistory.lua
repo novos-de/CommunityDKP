@@ -79,7 +79,8 @@ function CommDKP:DKPHistoryFilterBox_Create()
 
 	-- Create the dropdown, and configure its appearance
 	if not filterDropdown then
-		filterDropdown = CreateFrame("FRAME", "CommDKPDKPHistoryFilterNameDropDown", CommDKP.ConfigTab6, "CommunityDKPUIDropDownMenuTemplate")
+		--filterDropdown = CreateFrame("FRAME", "CommDKPDKPHistoryFilterNameDropDown", CommDKP.ConfigTab6, "CommunityDKPUIDropDownMenuTemplate")
+		filterDropdown = LibDD:Create_UIDropDownMenu("CommDKPDKPHistoryFilterNameDropDown", CommDKP.ConfigTab6);
 	end
 
 	-- Create and bind the initialization function to the dropdown menu
@@ -151,7 +152,7 @@ function CommDKP:DKPHistoryFilterBox_Create()
     end
 
     CommDKP:DKPHistory_Update(true)
-    CloseDropDownMenus()
+    LibDD:CloseDropDownMenus()
   end
 end
 

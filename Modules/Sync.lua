@@ -208,7 +208,7 @@ function CommDKP_BroadcastFull_Init()
 	function core.Broadcast.player:SetValue(newValue, arg2) 	---- PLAYER dropdown function
 		if player ~= newValue then player = newValue end
 		LibDD:UIDropDownMenu_SetText(core.Broadcast.player, arg2)
-		CloseDropDownMenus()
+		LibDD:CloseDropDownMenus()
 	end
 
 	core.Broadcast.confirmButton:SetScript("OnClick", function()
@@ -377,7 +377,8 @@ function CommDKP_BroadcastFull_Create()
 			GameTooltip:Hide()
 		end)
 
-		f.player = CreateFrame("FRAME", "CommDKPAwardConfirmPlayerDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
+		--f.player = CreateFrame("FRAME", "CommDKPAwardConfirmPlayerDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
+		f.player = LibDD:Create_UIDropDownMenu("CommDKPAwardConfirmPlayerDropDown", f);
 		f.player:SetPoint("TOPRIGHT", f.tocontainer, "TOPRIGHT", 5, -7)
 		LibDD:UIDropDownMenu_SetWidth(f.player, 150)
 		LibDD:UIDropDownMenu_JustifyText(f.player, "LEFT")

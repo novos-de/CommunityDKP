@@ -315,7 +315,8 @@ local function AwardConfirm_Create()
 		f.teamHeader:SetPoint("TOPLEFT", f, "TOPLEFT", 120, -60);
 		f.teamHeader:SetText(L["TEAM"]..":")
 
-		f.team = CreateFrame("FRAME", "CommDKPAwardConfirmPlayerDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
+		--f.team = CreateFrame("FRAME", "CommDKPAwardConfirmPlayerDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
+		f.team = LibDD:Create_UIDropDownMenu("CommDKPAwardConfirmPlayerDropDown", f);
 		f.team:SetPoint("LEFT", f.teamHeader, "RIGHT", -15, 0)
 		LibDD:UIDropDownMenu_SetWidth(f.team, 150)
 		LibDD:UIDropDownMenu_JustifyText(f.team, "LEFT")
@@ -330,7 +331,8 @@ local function AwardConfirm_Create()
 		f.playerHeader:SetPoint("TOPRIGHT", f.teamHeader, "BOTTOMRIGHT", 0, -10);
 		f.playerHeader:SetText(L["PLAYER"]..":")
 
-		f.player = CreateFrame("FRAME", "CommDKPAwardConfirmPlayerDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
+		--f.player = CreateFrame("FRAME", "CommDKPAwardConfirmPlayerDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
+		f.player = LibDD:Create_UIDropDownMenu("CommDKPAwardConfirmPlayerDropDown", f);
 		f.player:SetPoint("LEFT", f.playerHeader, "RIGHT", -15, 0)
 		LibDD:UIDropDownMenu_SetWidth(f.player, 150)
 		LibDD:UIDropDownMenu_JustifyText(f.player, "LEFT")
@@ -410,7 +412,8 @@ local function AwardConfirm_Create()
 		f.bossHeader:SetPoint("TOPRIGHT", f.costHeader, "BOTTOMRIGHT", 0, -10);
 		f.bossHeader:SetText(L["BOSS"]..":")
 
-		f.bossDropDown = CreateFrame("FRAME", "CommDKPAwardConfirmBossDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
+		--f.bossDropDown = CreateFrame("FRAME", "CommDKPAwardConfirmBossDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
+		f.bossDropDown = LibDD:Create_UIDropDownMenu("CommDKPAwardConfirmBossDropDown", f);
 		f.bossDropDown:SetPoint("LEFT", f.bossHeader, "RIGHT", -15, -2)
 		LibDD:UIDropDownMenu_SetWidth(f.bossDropDown, 150)
 		LibDD:UIDropDownMenu_JustifyText(f.bossDropDown, "LEFT")
@@ -425,7 +428,8 @@ local function AwardConfirm_Create()
 		f.zoneHeader:SetPoint("TOPRIGHT", f.bossHeader, "BOTTOMRIGHT", 0, -10);
 		f.zoneHeader:SetText(L["ZONE"]..":")
 
-		f.zoneDropDown = CreateFrame("FRAME", "CommDKPAwardConfirmBossDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
+		--f.zoneDropDown = CreateFrame("FRAME", "CommDKPAwardConfirmBossDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
+		f.zoneDropDown = LibDD:Create_UIDropDownMenu("CommDKPAwardConfirmBossDropDown", f);
 		f.zoneDropDown:SetPoint("LEFT", f.zoneHeader, "RIGHT", -15, -2)
 		LibDD:UIDropDownMenu_SetWidth(f.zoneDropDown, 150)
 		LibDD:UIDropDownMenu_JustifyText(f.zoneDropDown, "LEFT")
@@ -628,19 +632,19 @@ function CommDKP:AwardConfirm(player, cost, boss, zone, loot, reassign)
 	function core.AwardConfirm.player:SetValue(newValue, arg2) 	---- PLAYER dropdown function
 		if player ~= newValue then player = newValue end
 		LibDD:UIDropDownMenu_SetText(core.AwardConfirm.player, arg2)
-		CloseDropDownMenus()
+		LibDD:CloseDropDownMenus()
 	end
 
 	function core.AwardConfirm.bossDropDown:SetValue(newValue)          ---- BOSS dropdown function
 		LibDD:UIDropDownMenu_SetText(core.AwardConfirm.bossDropDown, newValue)
 		curBoss = newValue;
-		CloseDropDownMenus()
+		LibDD:CloseDropDownMenus()
 	end
 
 	function core.AwardConfirm.zoneDropDown:SetValue(newValue)          ---- ZONE dropdown function
 		LibDD:UIDropDownMenu_SetText(core.AwardConfirm.zoneDropDown, newValue)
 		curZone = newValue;
-		CloseDropDownMenus()
+		LibDD:CloseDropDownMenus()
 	end
 
 	core.AwardConfirm.yesButton:SetScript("OnClick", function()         -- Run when "Yes" is clicked
