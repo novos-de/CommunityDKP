@@ -957,8 +957,8 @@ if GetLocale() == "ruRU" then
 
     --TODO TRANSLATE:
     CHANGELOG1 = "CommunityDKP - v3.2.9-r70-bcc",
-    CHANGELOG2 = " - updated ACE to its latest alpha version",,
-    CHANGELOG3 = "",
+    CHANGELOG2 = " - updated ACE to its latest alpha version",
+    CHANGELOG3 = " - added LibUIDropDownMenu-4.0 to avoid taint issue",
     CHANGELOG4 = "",
     CHANGELOG5 = "",
     CHANGELOG6 = "",

@@ -809,12 +809,12 @@ core.L = {
 
     --TODO TRANSLATE:
   CHANGELOG1 = "CommunityDKP - v3.2.9-r70-bcc",
-  CHANGELOG2 = " - fixed class filters (shamans / paladins)",
-  CHANGELOG3 = " - fixed class graph (9th class)",
-  CHANGELOG4 = " - updated version in the header",
-  CHANGELOG5 = " - added TBC zones and encounters",
-  CHANGELOG6 = " - added localizations to TBC zones and encounters",
-  CHANGELOG7 = " - added auto award loot PR#174",
+  CHANGELOG2 = " - updated ACE to its latest alpha version",
+  CHANGELOG3 = " - added LibUIDropDownMenu-4.0 to avoid taint issue",
+  CHANGELOG4 = "",
+  CHANGELOG5 = "",
+  CHANGELOG6 = "",
+  CHANGELOG7 = "",
   CHANGELOG8 = "",
   CHANGELOG9 = "Taidtuskecyh @ Gehennas",
   CHANGELOG10 = "CommunityDKP Discord: https://discord.gg/dXXK4vH"

@@ -352,6 +352,9 @@ function CommDKP:SendSeedData()
 end
 
 function CommDKP_OnEvent(self, event, arg1, ...)
+
+	if self:IsForbidden() then return; end;
+
 	if event == "ADDON_LOADED" then
 		if (arg1 ~= "CommunityDKP") then return end
 		core.IsOfficer = nil
@@ -713,8 +716,8 @@ function CommDKP:OnInitialize(event, name)		-- This is the FIRST function to run
 		C_Timer.After(5, function ()
 			core.CommDKPUI = CommDKP.UIConfig or CommDKP:CreateMenu();		-- creates main menu after 5 seconds (trying to initialize after raid frames are loaded)
 			core.KeyEventUI = CreateFrame("Frame","KeyEventFrame", UIParent);
-
-			-- on every key down ? really?
+			
+			-- on every key down ? really?	
 			core.KeyEventUI:SetScript("OnKeyDown", function(self, key)
 				if core.Initialized and core.IsOfficer then
 					if MouseIsOver(MultiBarLeft) or MouseIsOver(MultiBarRight) or MouseIsOver(MultiBarBottomLeft) or MouseIsOver(MultiBarBottomRight) or MouseIsOver(MainMenuBar) then

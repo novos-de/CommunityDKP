@@ -4,6 +4,8 @@ local CommDKP = core.CommDKP;
 local L = core.L;
 
 local OptionsLoaded = false;
+local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0");
+
 
 function CommDKP_RestoreFilterOptions()  		-- restores default filter selections
 	CommDKP.UIConfig.search:SetText(L["SEARCH"])
@@ -373,22 +375,23 @@ function CommDKP:CreateMenu()
 	SortButtons.class.t = CreateFrame("FRAME", "CommDKPSortColDropdown", SortButtons.class, "CommunityDKPTableHeaderDropDownMenuTemplate")
 	SortButtons.class.t:SetPoint("CENTER", SortButtons.class, "CENTER", 4, -3)
 	UIDropDownMenu_JustifyText(SortButtons.class.t, "CENTER")
-	UIDropDownMenu_SetWidth(SortButtons.class.t, 80)
+	LibDD:UIDropDownMenu_SetWidth(SortButtons.class.t, 80)
 	UIDropDownMenu_SetText(SortButtons.class.t, L["CLASS"])
-	UIDropDownMenu_Initialize(SortButtons.class.t, function(self, level, menuList)
-	local reason = UIDropDownMenu_CreateInfo()
+	LibDD:UIDropDownMenu_Initialize(SortButtons.class.t, function(self, level, menuList)
+		
+	local reason = LibDD:UIDropDownMenu_CreateInfo()
 		reason.func = self.SetValue
 		reason.fontObject = "CommDKPSmallCenter"
 		reason.text, reason.arg1, reason.arg2, reason.checked, reason.isNotRadio = L["CLASS"], "class", L["CLASS"], "class" == core.CenterSort, true
-		UIDropDownMenu_AddButton(reason)
+		LibDD:UIDropDownMenu_AddButton(reason)
 		reason.text, reason.arg1, reason.arg2, reason.checked, reason.isNotRadio = L["SPEC"], "spec", L["SPEC"], "spec" == core.CenterSort, true
-		UIDropDownMenu_AddButton(reason)
+		LibDD:UIDropDownMenu_AddButton(reason)
 		reason.text, reason.arg1, reason.arg2, reason.checked, reason.isNotRadio = L["RANK"], "rank", L["RANK"], "rank" == core.CenterSort, true
-		UIDropDownMenu_AddButton(reason)
+		LibDD:UIDropDownMenu_AddButton(reason)
 		reason.text, reason.arg1, reason.arg2, reason.checked, reason.isNotRadio = L["ROLE"], "role", L["ROLE"], "role" == core.CenterSort, true
-		UIDropDownMenu_AddButton(reason)
+		LibDD:UIDropDownMenu_AddButton(reason)
 		reason.text, reason.arg1, reason.arg2, reason.checked, reason.isNotRadio = L["VERSION"], "version", L["VERSION"], "version" == core.CenterSort, true
-		UIDropDownMenu_AddButton(reason)
+		LibDD:UIDropDownMenu_AddButton(reason)
 	end)
 	-- Dropdown Menu Function
 	function SortButtons.class.t:SetValue(newValue, arg2)
@@ -522,14 +525,14 @@ function CommDKP:CreateMenu()
 				GameTooltip:Hide()
 			end
 		)
-		UIDropDownMenu_SetWidth(CommDKP.UIConfig.TeamViewChangerDropDown, 150)
+		LibDD:UIDropDownMenu_SetWidth(CommDKP.UIConfig.TeamViewChangerDropDown, 150)
 		UIDropDownMenu_SetText(CommDKP.UIConfig.TeamViewChangerDropDown, CommDKP:GetCurrentTeamName())
 
 		-- Create and bind the initialization function to the dropdown menu
-		UIDropDownMenu_Initialize(CommDKP.UIConfig.TeamViewChangerDropDown, 
+		LibDD:UIDropDownMenu_Initialize(CommDKP.UIConfig.TeamViewChangerDropDown, 
 			function(self, level, menuList)
-
-				local dropDownMenuItem = UIDropDownMenu_CreateInfo()
+				
+				local dropDownMenuItem = LibDD:UIDropDownMenu_CreateInfo()
 				dropDownMenuItem.func = self.SetValue
 				dropDownMenuItem.fontObject = "CommDKPSmallCenter"
 			
@@ -541,7 +544,7 @@ function CommDKP:CreateMenu()
 					dropDownMenuItem.arg2 = teamList[i][1] -- index
 					dropDownMenuItem.checked = teamList[i][1] == tonumber(CommDKP:GetCurrentTeamIndex())
 					dropDownMenuItem.isNotRadio = true
-					UIDropDownMenu_AddButton(dropDownMenuItem)
+					LibDD:UIDropDownMenu_AddButton(dropDownMenuItem)
 				end
 			end
 		)

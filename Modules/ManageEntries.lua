@@ -3,6 +3,7 @@ local _G = _G;
 local CommDKP = core.CommDKP;
 local L = core.L;
 
+local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0");
 
 local function Remove_Entries()
 	CommDKP:StatusVerify_Update()
@@ -657,13 +658,14 @@ function CommDKP:ManageEntries()
 				GameTooltip:Hide()
 			end
 		)
-		UIDropDownMenu_SetWidth(CommDKP.ConfigTab3.GuildRankDropDown, 105)
+		LibDD:UIDropDownMenu_SetWidth(CommDKP.ConfigTab3.GuildRankDropDown, 105)
 		UIDropDownMenu_SetText(CommDKP.ConfigTab3.GuildRankDropDown, "Select Rank")
 
 		-- Create and bind the initialization function to the dropdown menu
-		UIDropDownMenu_Initialize(CommDKP.ConfigTab3.GuildRankDropDown, 
+			LibDD:UIDropDownMenu_Initialize(CommDKP.ConfigTab3.GuildRankDropDown, 
 			function(self, level, menuList)
-				local rank = UIDropDownMenu_CreateInfo()
+				
+				local rank = LibDD:UIDropDownMenu_CreateInfo()
 					rank.func = self.SetValue
 					rank.fontObject = "CommDKPSmallCenter"
 
@@ -671,7 +673,7 @@ function CommDKP:ManageEntries()
 
 					for i=1, #rankList do
 						rank.text, rank.arg1, rank.arg2, rank.checked, rank.isNotRadio = rankList[i].name, rankList[i].name, rankList[i].index, rankList[i].name == curRank, true
-						UIDropDownMenu_AddButton(rank)
+						LibDD:UIDropDownMenu_AddButton(rank)
 					end
 			end
 		)
@@ -1031,13 +1033,14 @@ function CommDKP:ManageEntries()
 					GameTooltip:Hide()
 				end
 			)
-			UIDropDownMenu_SetWidth(CommDKP.ConfigTab3.TeamListDropDown, 105)
+			LibDD:UIDropDownMenu_SetWidth(CommDKP.ConfigTab3.TeamListDropDown, 105)
 			UIDropDownMenu_SetText(CommDKP.ConfigTab3.TeamListDropDown, L["TEAMSELECT"])
 
 			-- Create and bind the initialization function to the dropdown menu
-			UIDropDownMenu_Initialize(CommDKP.ConfigTab3.TeamListDropDown, 
+				LibDD:UIDropDownMenu_Initialize(CommDKP.ConfigTab3.TeamListDropDown, 
 				function(self, level, menuList)
-					local dropDownMenuItem = UIDropDownMenu_CreateInfo()
+					
+					local dropDownMenuItem = LibDD:UIDropDownMenu_CreateInfo()
 					dropDownMenuItem.func = self.SetValue
 					dropDownMenuItem.fontObject = "CommDKPSmallCenter"
 				
@@ -1049,7 +1052,7 @@ function CommDKP:ManageEntries()
 						dropDownMenuItem.arg2 = teamList[i][1]
 						dropDownMenuItem.checked = teamList[i][1] == selectedTeamIndex
 						dropDownMenuItem.isNotRadio = true
-						UIDropDownMenu_AddButton(dropDownMenuItem)
+						LibDD:UIDropDownMenu_AddButton(dropDownMenuItem)
 					end
 				end
 			)

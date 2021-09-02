@@ -7,6 +7,7 @@ local bytesSent = 0
 local bytesTotal = 0
 local LibAceSerializer = LibStub:GetLibrary("AceSerializer-3.0")
 local LibDeflate = LibStub:GetLibrary("LibDeflate")
+local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0");
 
 function CommDKP_Profile_Create(player, dkp, gained, spent, teamIndex)
 	local _teamIndex = teamIndex or core.DB.defaults.CurrentTeam;
@@ -170,8 +171,9 @@ function CommDKP_BroadcastFull_Init()
 	core.Broadcast = core.Broadcast or CommDKP_BroadcastFull_Create()
 	core.Broadcast:SetShown(not core.Broadcast:IsShown())
 
-	UIDropDownMenu_Initialize(core.Broadcast.player, function(self, level, menuList)
-		local filterName = UIDropDownMenu_CreateInfo()
+	LibDD:UIDropDownMenu_Initialize(core.Broadcast.player, function(self, level, menuList)
+		
+		local filterName = LibDD:UIDropDownMenu_CreateInfo()
 		local ranges = {1}
 
 		while ranges[#ranges] < #PlayerList do
@@ -186,7 +188,7 @@ function CommDKP_BroadcastFull_Init()
 				local max = i*20;
 				if max > #PlayerList then max = #PlayerList end
 				filterName.text, filterName.checked, filterName.menuList, filterName.hasArrow = strsub(PlayerList[((i*20)-19)].player, 1, 1).."-"..strsub(PlayerList[max].player, 1, 1), curSelected >= (i*20)-19 and curSelected <= i*20, i, true
-				UIDropDownMenu_AddButton(filterName)
+				LibDD:UIDropDownMenu_AddButton(filterName)
 			end
 			
 		else
@@ -196,7 +198,7 @@ function CommDKP_BroadcastFull_Init()
 					local c = CommDKP:GetCColors(PlayerList[i].class)
 
 					filterName.text, filterName.arg1, filterName.arg2, filterName.checked, filterName.isNotRadio = "|c"..c.hex..PlayerList[i].player.."|r", PlayerList[i].player, "|c"..c.hex..PlayerList[i].player.."|r", PlayerList[i].player == player, true
-					UIDropDownMenu_AddButton(filterName, level)
+					LibDD:UIDropDownMenu_AddButton(filterName, level)
 				end
 			end
 		end
@@ -377,7 +379,7 @@ function CommDKP_BroadcastFull_Create()
 
 		f.player = CreateFrame("FRAME", "CommDKPAwardConfirmPlayerDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
 		f.player:SetPoint("TOPRIGHT", f.tocontainer, "TOPRIGHT", 5, -7)
-		UIDropDownMenu_SetWidth(f.player, 150)
+		LibDD:UIDropDownMenu_SetWidth(f.player, 150)
 		UIDropDownMenu_JustifyText(f.player, "LEFT")
 		f.player:Hide()
 
