@@ -1267,10 +1267,10 @@ function lib:UIDropDownMenu_Refresh(frame, useValue, dropdownLevel)
 					if (button.iconOnly and icon and button.icon) then
 						lib:UIDropDownMenu_SetIconImage(icon, button.icon, button.iconInfo);
 					elseif ( useValue ) then
-						lib:UIDropDownMenu_SetText(frame, button.value);
+						lib:LibDD:UIDropDownMenu_SetText(frame, button.value);
 						icon:Hide();
 					else
-						lib:UIDropDownMenu_SetText(frame, button:GetText());
+						lib:LibDD:UIDropDownMenu_SetText(frame, button:GetText());
 						icon:Hide();
 					end
 				end
@@ -1292,7 +1292,7 @@ function lib:UIDropDownMenu_Refresh(frame, useValue, dropdownLevel)
 		end
 	end
 	if(somethingChecked == nil) then
-		lib:UIDropDownMenu_SetText(frame, VIDEO_QUALITY_LABEL6);
+		lib:LibDD:UIDropDownMenu_SetText(frame, VIDEO_QUALITY_LABEL6);
 		local icon = GetChild(frame, frame:GetName(), "Icon");
 		icon:Hide();
 	end
@@ -1702,7 +1702,7 @@ function lib:UIDropDownMenu_SetButtonWidth(frame, width)
 	frame.noResize = 1;
 end
 
-function lib:UIDropDownMenu_SetText(frame, text)
+function lib:LibDD:UIDropDownMenu_SetText(frame, text)
 	local frameName = frame:GetName();
 	GetChild(frame, frameName, "Text"):SetText(text);
 end
@@ -1717,7 +1717,7 @@ function lib:UIDropDownMenu_ClearAll(frame)
 	frame.selectedID = nil;
 	frame.selectedName = nil;
 	frame.selectedValue = nil;
-	lib:UIDropDownMenu_SetText(frame, "");
+	lib:LibDD:UIDropDownMenu_SetText(frame, "");
 
 	local button, checkImage, uncheckImage;
 	for i=1, L_UIDROPDOWNMENU_MAXBUTTONS do

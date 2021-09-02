@@ -374,9 +374,9 @@ function CommDKP:CreateMenu()
 	-- center column dropdown (class, rank, spec etc..)
 	SortButtons.class.t = CreateFrame("FRAME", "CommDKPSortColDropdown", SortButtons.class, "CommunityDKPTableHeaderDropDownMenuTemplate")
 	SortButtons.class.t:SetPoint("CENTER", SortButtons.class, "CENTER", 4, -3)
-	UIDropDownMenu_JustifyText(SortButtons.class.t, "CENTER")
+	LibDD:UIDropDownMenu_JustifyText(SortButtons.class.t, "CENTER")
 	LibDD:UIDropDownMenu_SetWidth(SortButtons.class.t, 80)
-	UIDropDownMenu_SetText(SortButtons.class.t, L["CLASS"])
+	LibDD:UIDropDownMenu_SetText(SortButtons.class.t, L["CLASS"])
 	LibDD:UIDropDownMenu_Initialize(SortButtons.class.t, function(self, level, menuList)
 		
 	local reason = LibDD:UIDropDownMenu_CreateInfo()
@@ -397,7 +397,7 @@ function CommDKP:CreateMenu()
 	function SortButtons.class.t:SetValue(newValue, arg2)
 		core.CenterSort = newValue
 		SortButtons.class.Id = newValue;
-		UIDropDownMenu_SetText(SortButtons.class.t, arg2)
+		LibDD:UIDropDownMenu_SetText(SortButtons.class.t, arg2)
 		CommDKP:SortDKPTable(newValue, "reset")
 		core.currentSort = newValue;
 		CloseDropDownMenus()
@@ -526,7 +526,7 @@ function CommDKP:CreateMenu()
 			end
 		)
 		LibDD:UIDropDownMenu_SetWidth(CommDKP.UIConfig.TeamViewChangerDropDown, 150)
-		UIDropDownMenu_SetText(CommDKP.UIConfig.TeamViewChangerDropDown, CommDKP:GetCurrentTeamName())
+		LibDD:UIDropDownMenu_SetText(CommDKP.UIConfig.TeamViewChangerDropDown, CommDKP:GetCurrentTeamName())
 
 		-- Create and bind the initialization function to the dropdown menu
 		LibDD:UIDropDownMenu_Initialize(CommDKP.UIConfig.TeamViewChangerDropDown, 
@@ -556,7 +556,7 @@ function CommDKP:CreateMenu()
 				if core.RaidInProgress == false and core.RaidInPause == false then
 					CommDKP:SetCurrentTeam(arg2)
 					CommDKP:SortDKPTable(core.currentSort, "reset")
-					UIDropDownMenu_SetText(CommDKP.UIConfig.TeamViewChangerDropDown, arg1)
+					LibDD:UIDropDownMenu_SetText(CommDKP.UIConfig.TeamViewChangerDropDown, arg1)
 				else
 					StaticPopupDialogs["RAID_IN_PROGRESS"] = {
 						text = L["TEAMCHANGERAIDINPROGRESS"],

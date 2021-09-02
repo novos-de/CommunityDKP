@@ -128,12 +128,12 @@ function CommDKP:DKPHistoryFilterBox_Create()
 	filterDropdown:SetPoint("TOPRIGHT", CommDKP.ConfigTab6, "TOPRIGHT", -13, -11)
 
 	LibDD:UIDropDownMenu_SetWidth(filterDropdown, 150)
-	UIDropDownMenu_SetText(filterDropdown, curfilterName or L["NOFILTER"])
+	LibDD:UIDropDownMenu_SetText(filterDropdown, curfilterName or L["NOFILTER"])
 	
   -- Dropdown Menu Function
   function filterDropdown:FilterSetValue(newValue, arg2)
     if curfilterName ~= newValue then curfilterName = newValue else curfilterName = nil end
-    UIDropDownMenu_SetText(filterDropdown, arg2)
+    LibDD:UIDropDownMenu_SetText(filterDropdown, arg2)
     
     if newValue == L["NOFILTER"] then
     	filter = nil;

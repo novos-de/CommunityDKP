@@ -659,7 +659,7 @@ function CommDKP:ManageEntries()
 			end
 		)
 		LibDD:UIDropDownMenu_SetWidth(CommDKP.ConfigTab3.GuildRankDropDown, 105)
-		UIDropDownMenu_SetText(CommDKP.ConfigTab3.GuildRankDropDown, "Select Rank")
+		LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab3.GuildRankDropDown, "Select Rank")
 
 		-- Create and bind the initialization function to the dropdown menu
 			LibDD:UIDropDownMenu_Initialize(CommDKP.ConfigTab3.GuildRankDropDown, 
@@ -683,11 +683,11 @@ function CommDKP:ManageEntries()
 			if curRank ~= arg1 then
 				curRank = arg1
 				curIndex = arg2
-				UIDropDownMenu_SetText(CommDKP.ConfigTab3.GuildRankDropDown, arg1)
+				LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab3.GuildRankDropDown, arg1)
 			else
 				curRank = nil
 				curIndex = nil
-				UIDropDownMenu_SetText(CommDKP.ConfigTab3.GuildRankDropDown, L["SELECTRANK"])
+				LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab3.GuildRankDropDown, L["SELECTRANK"])
 			end
 
 			CloseDropDownMenus()
@@ -1034,7 +1034,7 @@ function CommDKP:ManageEntries()
 				end
 			)
 			LibDD:UIDropDownMenu_SetWidth(CommDKP.ConfigTab3.TeamListDropDown, 105)
-			UIDropDownMenu_SetText(CommDKP.ConfigTab3.TeamListDropDown, L["TEAMSELECT"])
+			LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab3.TeamListDropDown, L["TEAMSELECT"])
 
 			-- Create and bind the initialization function to the dropdown menu
 				LibDD:UIDropDownMenu_Initialize(CommDKP.ConfigTab3.TeamListDropDown, 
@@ -1062,13 +1062,13 @@ function CommDKP:ManageEntries()
 				if selectedTeamIndex ~= arg2 then
 					selectedTeam = arg1
 					selectedTeamIndex = arg2
-					UIDropDownMenu_SetText(CommDKP.ConfigTab3.TeamListDropDown, arg1)
+					LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab3.TeamListDropDown, arg1)
 					CommDKP.ConfigTab3.TeamNameInput:SetText(arg1)
 				else
 					selectedTeam = nil
 					selectedTeamIndex = nil
 					CommDKP.ConfigTab3.TeamNameInput:SetText("")
-					UIDropDownMenu_SetText(CommDKP.ConfigTab3.TeamListDropDown, L["TEAMSELECT"])
+					LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab3.TeamListDropDown, L["TEAMSELECT"])
 				end
 
 				CloseDropDownMenus()
@@ -1125,9 +1125,9 @@ function CommDKP:ManageEntries()
 						CommDKP:ChangeTeamName(selectedTeamIndex, self:GetText())
 						-- if we are performing name change on currently selected team, change main team view dropdown Text
 						if tonumber(CommDKP:GetCurrentTeamIndex()) == selectedTeamIndex then
-							UIDropDownMenu_SetText(CommDKP.UIConfig.TeamViewChangerDropDown, self:SetText(""))
+							LibDD:UIDropDownMenu_SetText(CommDKP.UIConfig.TeamViewChangerDropDown, self:SetText(""))
 						end
-						UIDropDownMenu_SetText(CommDKP.ConfigTab3.TeamListDropDown, L["TEAMSELECT"])
+						LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab3.TeamListDropDown, L["TEAMSELECT"])
 						selectedTeam = nil
 						selectedTeamIndex = nil
 						CloseDropDownMenus()
@@ -1198,10 +1198,10 @@ function CommDKP:ManageEntries()
 							CommDKP:ChangeTeamName(selectedTeamIndex, CommDKP.ConfigTab3.TeamNameInput:GetText())
 							-- if we are performing name change on currently selected team, change main team view dropdown Text
 							if tonumber(CommDKP:GetCurrentTeamIndex()) == selectedTeamIndex then
-								UIDropDownMenu_SetText(CommDKP.UIConfig.TeamViewChangerDropDown, CommDKP.ConfigTab3.TeamNameInput:GetText())
+								LibDD:UIDropDownMenu_SetText(CommDKP.UIConfig.TeamViewChangerDropDown, CommDKP.ConfigTab3.TeamNameInput:GetText())
 							end
 							CommDKP.ConfigTab3.TeamNameInput:SetText("")
-							UIDropDownMenu_SetText(CommDKP.ConfigTab3.TeamListDropDown, L["TEAMSELECT"])
+							LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab3.TeamListDropDown, L["TEAMSELECT"])
 							selectedTeam = nil
 							selectedTeamIndex = nil
 							CloseDropDownMenus()
@@ -1251,7 +1251,7 @@ function CommDKP:ManageEntries()
 						OnAccept = function()
 							CommDKP:AddNewTeamToGuild()
 							CommDKP.ConfigTab3.TeamNameInput:SetText("")
-							UIDropDownMenu_SetText(CommDKP.ConfigTab3.TeamListDropDown, L["TEAMSELECT"])
+							LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab3.TeamListDropDown, L["TEAMSELECT"])
 							CloseDropDownMenus()
 						end,
 						timeout = 0,

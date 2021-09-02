@@ -283,7 +283,7 @@ function CommDKP:ExportBox_Show(text)
 		f.FormatDropDown = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
 		f.FormatDropDown:SetPoint("BOTTOMLEFT", f, "BOTTOMLEFT", 20, 55)
 		LibDD:UIDropDownMenu_SetWidth(f.FormatDropDown, 100)
-		UIDropDownMenu_SetText(f.FormatDropDown, "Select Format")
+		LibDD:UIDropDownMenu_SetText(f.FormatDropDown, "Select Format")
 
 		-- Create and bind the initialization function to the dropdown menu
 			LibDD:UIDropDownMenu_Initialize(f.FormatDropDown, function(self, level, menuList)
@@ -311,7 +311,7 @@ function CommDKP:ExportBox_Show(text)
 			end
 
 			f.desc:SetText(ExportDefinition);
-			UIDropDownMenu_SetText(f.FormatDropDown, CurFormat)
+			LibDD:UIDropDownMenu_SetText(f.FormatDropDown, CurFormat)
 			CloseDropDownMenus()
 		end
 

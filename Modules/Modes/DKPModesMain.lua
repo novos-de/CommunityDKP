@@ -72,7 +72,7 @@ function CommDKP:DKPModes_Main()
 
   f.DKPModesMain.ModesDropDown:SetPoint("TOPLEFT", f.DKPModesMain, "TOPLEFT", 10, -200)
   LibDD:UIDropDownMenu_SetWidth(f.DKPModesMain.ModesDropDown, 150)
-  UIDropDownMenu_SetText(f.DKPModesMain.ModesDropDown, LocalMode)
+  LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ModesDropDown, LocalMode)
 
   -- Dropdown Menu Function
   function f.DKPModesMain.ModesDropDown:SetValue(newValue)
@@ -88,7 +88,7 @@ function CommDKP:DKPModes_Main()
       f.DKPModesMain.MaxBidBehaviorDropDown:Show();
       f.DKPModesMain.MaxBidBehaviorHeader:Show();
       core.DB.modes.costvalue = "Integer";
-      UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, "Integer")
+      LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, "Integer")
       f.DKPModesMain.SubZeroBidding:Show();
       f.DKPModesMain.SubZeroBidding:SetChecked(core.DB.modes.SubZeroBidding)
       if core.DB.modes.SubZeroBidding == true then
@@ -110,7 +110,7 @@ function CommDKP:DKPModes_Main()
       f.DKPModesMain.MaxBidBehaviorDropDown:Hide();
       f.DKPModesMain.MaxBidBehaviorHeader:Hide();
       core.DB.modes.MaxBehavior = "Max DKP";
-      UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, "Max DKP")
+      LibDD:UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, "Max DKP")
       f.DKPModesMain.RollContainer:Hide()
       f.DKPModesMain.ZeroSumType:Hide()
       f.DKPModesMain.ZeroSumTypeHeader:Hide();
@@ -126,11 +126,11 @@ function CommDKP:DKPModes_Main()
           f.DKPModesMain.AllowNegativeBidders:Show()
           f.DKPModesMain.AllowNegativeBidders:SetChecked(core.DB.modes.AllowNegativeBidders)
         end
-        UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, L["INTEGER"])
+        LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, L["INTEGER"])
       else
         f.DKPModesMain.SubZeroBidding:Hide()
         f.DKPModesMain.AllowNegativeBidders:Hide()
-        UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, L["PERCENT"])
+        LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, L["PERCENT"])
       end
     elseif newValue == "Roll Based Bidding" then
       core.DB.modes.mode = "Roll Based Bidding"
@@ -139,7 +139,7 @@ function CommDKP:DKPModes_Main()
       f.DKPModesMain.MaxBidBehaviorDropDown:Hide();
       f.DKPModesMain.MaxBidBehaviorHeader:Hide();
       core.DB.modes.MaxBehavior = "Max DKP";
-      UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, "Max DKP")
+      LibDD:UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, "Max DKP")
       f.DKPModesMain.ModeDescription:SetText(RollDescription)
       f.DKPModesMain.RollContainer:Show()
       f.DKPModesMain.ZeroSumType:Hide()
@@ -156,7 +156,7 @@ function CommDKP:DKPModes_Main()
           f.DKPModesMain.AllowNegativeBidders:Show()
           f.DKPModesMain.AllowNegativeBidders:SetChecked(core.DB.modes.AllowNegativeBidders)
         end
-        UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, "Integer")
+        LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, "Integer")
       end
     elseif newValue == "Zero Sum" then
       core.DB.modes.mode = "Zero Sum"
@@ -166,7 +166,7 @@ function CommDKP:DKPModes_Main()
       f.DKPModesMain.AllowNegativeBidders:Hide()
       f.DKPModesMain.RollContainer:Hide()
       f.DKPModesMain.ItemCostHeader:Hide();
-      UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, "Integer")
+      LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, "Integer")
       f.DKPModesMain.ItemCostDropDown:Hide();
       f.DKPModesMain.ZeroSumType:Show()
       f.DKPModesMain.ZeroSumTypeHeader:Show();
@@ -178,7 +178,7 @@ function CommDKP:DKPModes_Main()
         f.DKPModesMain.MaxBidBehaviorDropDown:Hide();
         f.DKPModesMain.MaxBidBehaviorHeader:Hide();
         core.DB.modes.MaxBehavior = "Max DKP";
-        UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, "Max DKP")
+        LibDD:UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, "Max DKP")
         f.DKPModesMain.CostSelection:Hide()
         f.DKPModesMain.CostSelectionHeader:Hide()
       else
@@ -201,7 +201,7 @@ function CommDKP:DKPModes_Main()
       LocalMode = L["ZEROSUMHEAD"]
     end
 
-    UIDropDownMenu_SetText(f.DKPModesMain.ModesDropDown, LocalMode)
+    LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ModesDropDown, LocalMode)
     CloseDropDownMenus()
   end
 
@@ -243,12 +243,12 @@ function CommDKP:DKPModes_Main()
 
   f.DKPModesMain.RoundDropDown:SetPoint("TOPLEFT", f.DKPModesMain.ModesDropDown, "BOTTOMLEFT", 0, -95)
   LibDD:UIDropDownMenu_SetWidth(f.DKPModesMain.RoundDropDown, 80)
-  UIDropDownMenu_SetText(f.DKPModesMain.RoundDropDown, core.DB.modes.rounding)
+  LibDD:UIDropDownMenu_SetText(f.DKPModesMain.RoundDropDown, core.DB.modes.rounding)
 
   -- Dropdown Menu Function
   function f.DKPModesMain.RoundDropDown:SetValue(newValue)
     core.DB.modes.rounding = newValue;
-    UIDropDownMenu_SetText(f.DKPModesMain.RoundDropDown, newValue)
+    LibDD:UIDropDownMenu_SetText(f.DKPModesMain.RoundDropDown, newValue)
     CloseDropDownMenus()
   end
 
@@ -289,17 +289,17 @@ function CommDKP:DKPModes_Main()
 
   f.DKPModesMain.MaxBidBehaviorDropDown:SetPoint("TOPLEFT", f.DKPModesMain.ModesDropDown, "BOTTOMLEFT", 0, -50)
   LibDD:UIDropDownMenu_SetWidth(f.DKPModesMain.MaxBidBehaviorDropDown, 200)
-  UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, core.DB.modes.MaxBehavior)
+  LibDD:UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, core.DB.modes.MaxBehavior)
 
   -- Dropdown Menu Function
   function f.DKPModesMain.MaxBidBehaviorDropDown:SetValue(newValue)
     core.DB.modes.MaxBehavior = newValue;
     if newValue == "Max DKP" then
-      UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, L["MAXBIDBEHAVIORMAXDKP"])
+      LibDD:UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, L["MAXBIDBEHAVIORMAXDKP"])
     elseif newValue == "Max Item Value" then
-      UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, L["MAXBIDBEHAVIORMAXITEMVALUE"])
+      LibDD:UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, L["MAXBIDBEHAVIORMAXITEMVALUE"])
     else
-      UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, L["MAXBIDBEHAVIORMIN"])
+      LibDD:UIDropDownMenu_SetText(f.DKPModesMain.MaxBidBehaviorDropDown, L["MAXBIDBEHAVIORMIN"])
     end
     CloseDropDownMenus()
   end
@@ -405,7 +405,7 @@ function CommDKP:DKPModes_Main()
 
   f.DKPModesMain.ChannelsDropDown:SetPoint("LEFT", f.DKPModesMain.ModesDropDown, "RIGHT", 30, 0)
   LibDD:UIDropDownMenu_SetWidth(f.DKPModesMain.ChannelsDropDown, 150)
-  UIDropDownMenu_SetText(f.DKPModesMain.ChannelsDropDown, L["OPENCHANNELS"])
+  LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ChannelsDropDown, L["OPENCHANNELS"])
 
   -- Dropdown Menu Function
   function f.DKPModesMain.ChannelsDropDown:SetValue(arg1)
@@ -417,7 +417,7 @@ function CommDKP:DKPModes_Main()
       core.DB.modes.channels.guild = not core.DB.modes.channels.guild
     end
 
-    UIDropDownMenu_SetText(f.DKPModesMain.ChannelsDropDown, "Open Channels")
+    LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ChannelsDropDown, "Open Channels")
     CloseDropDownMenus()
   end
 
@@ -468,7 +468,7 @@ function CommDKP:DKPModes_Main()
   
 
   LibDD:UIDropDownMenu_SetWidth(f.DKPModesMain.CostSelection, 150)
-  UIDropDownMenu_SetText(f.DKPModesMain.CostSelection, LocalCostSel)
+  LibDD:UIDropDownMenu_SetText(f.DKPModesMain.CostSelection, LocalCostSel)
 
   -- Dropdown Menu Function
   function f.DKPModesMain.CostSelection:SetValue(arg1)
@@ -482,7 +482,7 @@ function CommDKP:DKPModes_Main()
       LocalCostSel = L["SECONDBIDDERORMIN"]
     end
 
-    UIDropDownMenu_SetText(f.DKPModesMain.CostSelection, LocalCostSel)
+    LibDD:UIDropDownMenu_SetText(f.DKPModesMain.CostSelection, LocalCostSel)
     CloseDropDownMenus()
   end
 
@@ -581,7 +581,7 @@ function CommDKP:DKPModes_Main()
 
   f.DKPModesMain.ZeroSumType:SetPoint("TOPLEFT", f.DKPModesMain.Inflation, "BOTTOMLEFT", -20, -20)
   LibDD:UIDropDownMenu_SetWidth(f.DKPModesMain.ZeroSumType, 150)
-  UIDropDownMenu_SetText(f.DKPModesMain.ZeroSumType, core.DB.modes.ZeroSumBidType)
+  LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ZeroSumType, core.DB.modes.ZeroSumBidType)
 
   -- Dropdown Menu Function
   function f.DKPModesMain.ZeroSumType:SetValue(newValue)
@@ -605,7 +605,7 @@ function CommDKP:DKPModes_Main()
       f.DKPModesMain.MaxBidBehaviorHeader:Show();
     end
 
-    UIDropDownMenu_SetText(f.DKPModesMain.ZeroSumType, newValue)
+    LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ZeroSumType, newValue)
     CloseDropDownMenus()
   end
 
@@ -647,7 +647,7 @@ function CommDKP:DKPModes_Main()
   
   f.DKPModesMain.ItemCostDropDown:SetPoint("TOPLEFT", f.DKPModesMain.ModesDropDown, "BOTTOMLEFT", 0, -50)
   LibDD:UIDropDownMenu_SetWidth(f.DKPModesMain.ItemCostDropDown, 150)
-  UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, L[string.upper(core.DB.modes.costvalue)])
+  LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, L[string.upper(core.DB.modes.costvalue)])
 
   -- Dropdown Menu Function
   function f.DKPModesMain.ItemCostDropDown:SetValue(arg1)
@@ -659,14 +659,14 @@ function CommDKP:DKPModes_Main()
         f.DKPModesMain.AllowNegativeBidders:Show()
         f.DKPModesMain.AllowNegativeBidders:SetChecked(core.DB.modes.AllowNegativeBidders)
       end
-      UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, L["INTEGER"])
+      LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, L["INTEGER"])
     elseif arg1 == "Percent" then
       core.DB.modes.costvalue = "Percent"
       f.DKPModesMain.SubZeroBidding:Hide()
       f.DKPModesMain.AllowNegativeBidders:Hide()
       core.DB.modes.SubZeroBidding = false;
       f.DKPModesMain.SubZeroBidding:SetChecked(false)
-      UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, L["PERCENT"])
+      LibDD:UIDropDownMenu_SetText(f.DKPModesMain.ItemCostDropDown, L["PERCENT"])
     end
 
     
@@ -853,7 +853,7 @@ function CommDKP:DKPModes_Main()
         -10
       )
       LibDD:UIDropDownMenu_SetWidth(f.DKPModesMain.RollContainer.RollBiddingModeDropdown, 150)
-      UIDropDownMenu_SetText(f.DKPModesMain.RollContainer.RollBiddingModeDropdown, core.DB.modes.RollMode)
+      LibDD:UIDropDownMenu_SetText(f.DKPModesMain.RollContainer.RollBiddingModeDropdown, core.DB.modes.RollMode)
 
       -- Dropdown Menu Function
       function f.DKPModesMain.RollContainer.RollBiddingModeDropdown:SetValue(arg1)
@@ -874,7 +874,7 @@ function CommDKP:DKPModes_Main()
           f.DKPModesMain.RollContainer.maxKarma:Show()
           f.DKPModesMain.RollContainer.maxKarma.Header:Show()
         end
-        UIDropDownMenu_SetText(f.DKPModesMain.RollContainer.RollBiddingModeDropdown, core.DB.modes.RollMode);
+        LibDD:UIDropDownMenu_SetText(f.DKPModesMain.RollContainer.RollBiddingModeDropdown, core.DB.modes.RollMode);
         CloseDropDownMenus()
       end
 

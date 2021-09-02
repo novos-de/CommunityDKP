@@ -1399,7 +1399,7 @@ function CommDKP:Options()
 
   CommDKP.ConfigTab4.ChatFrame:SetPoint("LEFT", CommDKP.ConfigTab4.AutoOpenCheckbox, "RIGHT", 130, 0)
   LibDD:UIDropDownMenu_SetWidth(CommDKP.ConfigTab4.ChatFrame, 150)
-  UIDropDownMenu_SetText(CommDKP.ConfigTab4.ChatFrame, "Addon Notifications")
+  LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab4.ChatFrame, "Addon Notifications")
 
   function CommDKP.ConfigTab4.ChatFrame:SetValue(arg1)
     core.DB.defaults.ChatFrames[arg1] = not core.DB.defaults.ChatFrames[arg1]

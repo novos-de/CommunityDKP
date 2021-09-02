@@ -214,7 +214,7 @@ function CommDKP:AdjustDKPTab_Create()
 	CommDKP.ConfigTab2.reasonDropDown = CreateFrame("FRAME", "CommDKPConfigReasonDropDown", CommDKP.ConfigTab2, "CommunityDKPUIDropDownMenuTemplate")
 	CommDKP.ConfigTab2.reasonDropDown:SetPoint("TOPLEFT", CommDKP.ConfigTab2.description, "BOTTOMLEFT", -23, -60)
 	LibDD:UIDropDownMenu_SetWidth(CommDKP.ConfigTab2.reasonDropDown, 150)
-	UIDropDownMenu_SetText(CommDKP.ConfigTab2.reasonDropDown, L["SELECTREASON"])
+	LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab2.reasonDropDown, L["SELECTREASON"])
 
 	-- Create and bind the initialization function to the dropdown menu
 		LibDD:UIDropDownMenu_Initialize(CommDKP.ConfigTab2.reasonDropDown, function(self, level, menuList)
@@ -244,18 +244,18 @@ function CommDKP:AdjustDKPTab_Create()
 	function CommDKP.ConfigTab2.reasonDropDown:SetValue(newValue)
 		if curReason ~= newValue then curReason = newValue else curReason = nil end
 
-		UIDropDownMenu_SetText(CommDKP.ConfigTab2.reasonDropDown, curReason)
+		LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab2.reasonDropDown, curReason)
 
 		if (curReason == L["ONTIMEBONUS"]) then CommDKP.ConfigTab2.addDKP:SetNumber(core.DB.DKPBonus.OnTimeBonus); CommDKP.ConfigTab2.BossKilledDropdown:Hide()
 		elseif (curReason == L["BOSSKILLBONUS"]) then
 			CommDKP.ConfigTab2.addDKP:SetNumber(core.DB.DKPBonus.BossKillBonus);
 			CommDKP.ConfigTab2.BossKilledDropdown:Show()
-			UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, core.CurrentRaidZone..": "..core.LastKilledBoss)
+			LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, core.CurrentRaidZone..": "..core.LastKilledBoss)
 		elseif (curReason == L["RAIDCOMPLETIONBONUS"]) then CommDKP.ConfigTab2.addDKP:SetNumber(core.DB.DKPBonus.CompletionBonus); CommDKP.ConfigTab2.BossKilledDropdown:Hide()
 		elseif (curReason == L["NEWBOSSKILLBONUS"]) then
 			CommDKP.ConfigTab2.addDKP:SetNumber(core.DB.DKPBonus.NewBossKillBonus);
 			CommDKP.ConfigTab2.BossKilledDropdown:Show()
-			UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, core.CurrentRaidZone..": "..core.LastKilledBoss)
+			LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, core.CurrentRaidZone..": "..core.LastKilledBoss)
 		elseif (curReason == L["UNEXCUSEDABSENCE"]) then CommDKP.ConfigTab2.addDKP:SetNumber(core.DB.DKPBonus.UnexcusedAbsence); CommDKP.ConfigTab2.BossKilledDropdown:Hide()
 		else CommDKP.ConfigTab2.addDKP:SetText(""); CommDKP.ConfigTab2.BossKilledDropdown:Hide() end
 
@@ -331,7 +331,7 @@ function CommDKP:AdjustDKPTab_Create()
 	CommDKP.ConfigTab2.BossKilledDropdown:SetPoint("TOPLEFT", CommDKP.ConfigTab2.reasonDropDown, "BOTTOMLEFT", 0, 2)
 	CommDKP.ConfigTab2.BossKilledDropdown:Hide()
 	LibDD:UIDropDownMenu_SetWidth(CommDKP.ConfigTab2.BossKilledDropdown, 210)
-	UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, L["SELECTBOSS"])
+	LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, L["SELECTBOSS"])
 
 	LibDD:UIDropDownMenu_Initialize(CommDKP.ConfigTab2.BossKilledDropdown, function(self, level, menuList)
 		
@@ -428,7 +428,7 @@ function CommDKP:AdjustDKPTab_Create()
 		if curReason ~= L["BOSSKILLBONUS"] and curReason ~= L["NEWBOSSKILLBONUS"] then
 			CommDKP.ConfigTab2.reasonDropDown:SetValue(L["BOSSKILLBONUS"])
 		end
-		UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, core.CurrentRaidZone..": "..core.LastKilledBoss)
+		LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, core.CurrentRaidZone..": "..core.LastKilledBoss)
 		CloseDropDownMenus()
 	end
 

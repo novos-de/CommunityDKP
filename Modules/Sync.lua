@@ -203,11 +203,11 @@ function CommDKP_BroadcastFull_Init()
 			end
 		end
 	end)
-	UIDropDownMenu_SetText(core.Broadcast.player, "")
+	LibDD:UIDropDownMenu_SetText(core.Broadcast.player, "")
 
 	function core.Broadcast.player:SetValue(newValue, arg2) 	---- PLAYER dropdown function
 		if player ~= newValue then player = newValue end
-		UIDropDownMenu_SetText(core.Broadcast.player, arg2)
+		LibDD:UIDropDownMenu_SetText(core.Broadcast.player, arg2)
 		CloseDropDownMenus()
 	end
 
@@ -380,7 +380,7 @@ function CommDKP_BroadcastFull_Create()
 		f.player = CreateFrame("FRAME", "CommDKPAwardConfirmPlayerDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
 		f.player:SetPoint("TOPRIGHT", f.tocontainer, "TOPRIGHT", 5, -7)
 		LibDD:UIDropDownMenu_SetWidth(f.player, 150)
-		UIDropDownMenu_JustifyText(f.player, "LEFT")
+		LibDD:UIDropDownMenu_JustifyText(f.player, "LEFT")
 		f.player:Hide()
 
 		-- to guild

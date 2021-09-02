@@ -818,7 +818,7 @@ end
 function CommDKP:SetCurrentTeam(index)
 	CommDKP:GetTable(CommDKP_DB, false)["defaults"]["CurrentTeam"] = tostring(index);
 	CommDKP:StatusVerify_Update();
-	UIDropDownMenu_SetText(CommDKP.UIConfig.TeamViewChangerDropDown, CommDKP:GetCurrentTeamName());
+	LibDD:UIDropDownMenu_SetText(CommDKP.UIConfig.TeamViewChangerDropDown, CommDKP:GetCurrentTeamName());
 
 	-- reset dkp table and update it
 	core.WorkingTable = CommDKP:GetTable(CommDKP_DKPTable, true);

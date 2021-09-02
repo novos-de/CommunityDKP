@@ -318,7 +318,7 @@ local function AwardConfirm_Create()
 		f.team = CreateFrame("FRAME", "CommDKPAwardConfirmPlayerDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
 		f.team:SetPoint("LEFT", f.teamHeader, "RIGHT", -15, 0)
 		LibDD:UIDropDownMenu_SetWidth(f.team, 150)
-		UIDropDownMenu_JustifyText(f.team, "LEFT")
+		LibDD:UIDropDownMenu_JustifyText(f.team, "LEFT")
 
 	----------------------------------
 	-- Player row
@@ -333,7 +333,7 @@ local function AwardConfirm_Create()
 		f.player = CreateFrame("FRAME", "CommDKPAwardConfirmPlayerDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
 		f.player:SetPoint("LEFT", f.playerHeader, "RIGHT", -15, 0)
 		LibDD:UIDropDownMenu_SetWidth(f.player, 150)
-		UIDropDownMenu_JustifyText(f.player, "LEFT")
+		LibDD:UIDropDownMenu_JustifyText(f.player, "LEFT")
 
 	----------------------------------
 	-- Item row
@@ -413,7 +413,7 @@ local function AwardConfirm_Create()
 		f.bossDropDown = CreateFrame("FRAME", "CommDKPAwardConfirmBossDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
 		f.bossDropDown:SetPoint("LEFT", f.bossHeader, "RIGHT", -15, -2)
 		LibDD:UIDropDownMenu_SetWidth(f.bossDropDown, 150)
-		UIDropDownMenu_JustifyText(f.bossDropDown, "LEFT")
+		LibDD:UIDropDownMenu_JustifyText(f.bossDropDown, "LEFT")
 
 	----------------------------------
 	-- Zone row
@@ -428,7 +428,7 @@ local function AwardConfirm_Create()
 		f.zoneDropDown = CreateFrame("FRAME", "CommDKPAwardConfirmBossDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
 		f.zoneDropDown:SetPoint("LEFT", f.zoneHeader, "RIGHT", -15, -2)
 		LibDD:UIDropDownMenu_SetWidth(f.zoneDropDown, 150)
-		UIDropDownMenu_JustifyText(f.zoneDropDown, "LEFT")
+		LibDD:UIDropDownMenu_JustifyText(f.zoneDropDown, "LEFT")
 
 	----------------------------------
 	-- Buttons
@@ -524,12 +524,12 @@ function CommDKP:AwardConfirm(player, cost, boss, zone, loot, reassign)
 			end
 		)
 		-- Show which team is currently the current one
-		UIDropDownMenu_SetText(core.AwardConfirm.team, CommDKP:GetCurrentTeamName())
+		LibDD:UIDropDownMenu_SetText(core.AwardConfirm.team, CommDKP:GetCurrentTeamName())
 	
 	if player then
-		UIDropDownMenu_SetText(core.AwardConfirm.player, "|c"..class.hex..player.."|r")
+		LibDD:UIDropDownMenu_SetText(core.AwardConfirm.player, "|c"..class.hex..player.."|r")
 	else
-		UIDropDownMenu_SetText(core.AwardConfirm.player, "")
+		LibDD:UIDropDownMenu_SetText(core.AwardConfirm.player, "")
 	end
 
 	LibDD:UIDropDownMenu_Initialize(core.AwardConfirm.player, function(self, level, menuList)
@@ -571,11 +571,11 @@ function CommDKP:AwardConfirm(player, cost, boss, zone, loot, reassign)
 		end
 	end)
 	
-	UIDropDownMenu_SetText(core.AwardConfirm.bossDropDown, curBoss)
+	LibDD:UIDropDownMenu_SetText(core.AwardConfirm.bossDropDown, curBoss)
 	LibDD:UIDropDownMenu_Initialize(core.AwardConfirm.bossDropDown, function(self, level, menuList)                                   -- BOSS dropdown
 		
 		UIDropDownMenu_SetAnchor(core.AwardConfirm.bossDropDown, 10, 10, "TOPLEFT", core.AwardConfirm.bossDropDown, "BOTTOMLEFT")
-		--UIDropDownMenu_JustifyText(core.AwardConfirm.bossDropDown, "LEFT") 
+		--LibDD:UIDropDownMenu_JustifyText(core.AwardConfirm.bossDropDown, "LEFT") 
 		local reason = LibDD:UIDropDownMenu_CreateInfo()
 		local tempNPCs = {};
 
@@ -600,11 +600,11 @@ function CommDKP:AwardConfirm(player, cost, boss, zone, loot, reassign)
 		end
 	end)
 
-	UIDropDownMenu_SetText(core.AwardConfirm.zoneDropDown, curZone)
+	LibDD:UIDropDownMenu_SetText(core.AwardConfirm.zoneDropDown, curZone)
 	LibDD:UIDropDownMenu_Initialize(core.AwardConfirm.zoneDropDown, function(self, level, menuList)                                   -- ZONE dropdown
 		
 		UIDropDownMenu_SetAnchor(core.AwardConfirm.zoneDropDown, 10, 10, "TOPLEFT", core.AwardConfirm.zoneDropDown, "BOTTOMLEFT")
-		--UIDropDownMenu_JustifyText(core.AwardConfirm.bossDropDown, "LEFT") 
+		--LibDD:UIDropDownMenu_JustifyText(core.AwardConfirm.bossDropDown, "LEFT") 
 		local reason = LibDD:UIDropDownMenu_CreateInfo()
 		local tempZones = {};
 
@@ -627,18 +627,18 @@ function CommDKP:AwardConfirm(player, cost, boss, zone, loot, reassign)
 
 	function core.AwardConfirm.player:SetValue(newValue, arg2) 	---- PLAYER dropdown function
 		if player ~= newValue then player = newValue end
-		UIDropDownMenu_SetText(core.AwardConfirm.player, arg2)
+		LibDD:UIDropDownMenu_SetText(core.AwardConfirm.player, arg2)
 		CloseDropDownMenus()
 	end
 
 	function core.AwardConfirm.bossDropDown:SetValue(newValue)          ---- BOSS dropdown function
-		UIDropDownMenu_SetText(core.AwardConfirm.bossDropDown, newValue)
+		LibDD:UIDropDownMenu_SetText(core.AwardConfirm.bossDropDown, newValue)
 		curBoss = newValue;
 		CloseDropDownMenus()
 	end
 
 	function core.AwardConfirm.zoneDropDown:SetValue(newValue)          ---- ZONE dropdown function
-		UIDropDownMenu_SetText(core.AwardConfirm.zoneDropDown, newValue)
+		LibDD:UIDropDownMenu_SetText(core.AwardConfirm.zoneDropDown, newValue)
 		curZone = newValue;
 		CloseDropDownMenus()
 	end

@@ -323,7 +323,7 @@ function CommDKP:CreateSortBox()
 	sortDropdown:SetPoint("TOPRIGHT", CommDKP.ConfigTab5, "TOPRIGHT", -13, -11)
 
 	LibDD:UIDropDownMenu_SetWidth(sortDropdown, 150)
-	UIDropDownMenu_SetText(sortDropdown, curDropDownMenuFilterCategory or "Filter Name")
+	LibDD:UIDropDownMenu_SetText(sortDropdown, curDropDownMenuFilterCategory or "Filter Name")
 
   -- Dropdown Menu Function
   function sortDropdown:FilterSetValue(newValue, arg2)
@@ -353,16 +353,16 @@ function CommDKP:CreateSortBox()
 	
 	if curDropDownMenuFilterCategory == nil and curfilterValue == nil then
 		curSelected = 0
-		UIDropDownMenu_SetText(sortDropdown, L["NOFILTER"])
+		LibDD:UIDropDownMenu_SetText(sortDropdown, L["NOFILTER"])
 	elseif arg2 == L["NOFILTER"] or arg2 == L["DELETEDENTRY"] then
 		curSelected = 0
-		UIDropDownMenu_SetText(sortDropdown, newValue)
+		LibDD:UIDropDownMenu_SetText(sortDropdown, newValue)
 	elseif arg2 == L["ITEMS"] then
 		curSelected = self.menuList
-		UIDropDownMenu_SetText(sortDropdown, newValue)
+		LibDD:UIDropDownMenu_SetText(sortDropdown, newValue)
 	elseif arg2 == L["PLAYERS"] then
 		curSelected = self.menuList
-		UIDropDownMenu_SetText(sortDropdown, self.value)
+		LibDD:UIDropDownMenu_SetText(sortDropdown, self.value)
 	end
 
 	if curDropDownMenuFilterCategory == nil and curfilterValue == nil then
