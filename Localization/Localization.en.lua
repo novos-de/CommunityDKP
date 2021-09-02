@@ -875,10 +875,10 @@ core.L = {
   MIGRATIONCANCELED     = "Migration canceled.|n|nPlease disable MonolithDKP and /reload the UI if you want to continue with CommunityDKP without using your current tables and settings.",
   MIGRATIONCOMPLETED    = "Migration complete.|n|nPlease disable MonolithDKP and /reload the UI.",
 
-  CHANGELOG1 = "CommunityDKP - v3.2.9-r70-bcc",
+  CHANGELOG1 = "CommunityDKP - v3.2.9-r71-bcc",
   CHANGELOG2 = " - updated ACE to its latest alpha version",
   CHANGELOG3 = " - added LibUIDropDownMenu-4.0 to avoid taint issue",
-  CHANGELOG4 = "",
+  CHANGELOG4 = " - actually read the lib documentation and fixed dropdowns",
   CHANGELOG5 = "",
   CHANGELOG6 = "",
   CHANGELOG7 = "",
