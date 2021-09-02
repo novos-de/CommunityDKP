@@ -7,6 +7,8 @@ local _, core = ...;
 local _G = _G;
 local L = core.L;
 
+local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0");
+
 core.CommDKP = {};       -- UI Frames global
 core.CommDKPApi = { __version = 1, pricelist = nil }
 local CommDKP = core.CommDKP;
@@ -169,7 +171,7 @@ core.EncounterList = {      -- Event IDs must be in the exact same order as core
 core.CommDKPUI = {}        -- global storing entire Configuration UI to hide/show UI
 core.MonVersion = "v3.2.9";
 core.BuildNumber = 30209;
-core.ReleaseNumber = 71
+core.ReleaseNumber = 72
 core.defaultTable = "__default";
 core.SemVer = core.MonVersion.."-r"..tostring(core.ReleaseNumber);
 core.UpgradeSchema = false;
