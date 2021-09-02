@@ -3,7 +3,7 @@ local _G = _G;
 local CommDKP = core.CommDKP;
 local L = core.L;
 
-
+local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0");
 
 local function GenerateDKPTables(table, format)
 	local ExportString;
@@ -282,20 +282,21 @@ function CommDKP:ExportBox_Show(text)
 
 		f.FormatDropDown = CreateFrame("FRAME", "CommDKPModeSelectDropDown", f, "CommunityDKPUIDropDownMenuTemplate")
 		f.FormatDropDown:SetPoint("BOTTOMLEFT", f, "BOTTOMLEFT", 20, 55)
-		UIDropDownMenu_SetWidth(f.FormatDropDown, 100)
-		UIDropDownMenu_SetText(f.FormatDropDown, "Select Format")
+		LibDD:UIDropDownMenu_SetWidth(f.FormatDropDown, 100)
+		LibDD:UIDropDownMenu_SetText(f.FormatDropDown, "Select Format")
 
 		-- Create and bind the initialization function to the dropdown menu
-		UIDropDownMenu_Initialize(f.FormatDropDown, function(self, level, menuList)
-		local Format = UIDropDownMenu_CreateInfo()
+			LibDD:UIDropDownMenu_Initialize(f.FormatDropDown, function(self, level, menuList)
+			
+		local Format = LibDD:UIDropDownMenu_CreateInfo()
 			Format.func = self.SetValue
 			Format.fontObject = "CommDKPSmallCenter"
 			Format.text, Format.arg1, Format.checked, Format.isNotRadio = "HTML", "HTML", "HTML" == CurFormat, false
-			UIDropDownMenu_AddButton(Format)
+			LibDD:UIDropDownMenu_AddButton(Format)
 			Format.text, Format.arg1, Format.checked, Format.isNotRadio = "CSV", "CSV", "CSV" == CurFormat, false
-			UIDropDownMenu_AddButton(Format)
+			LibDD:UIDropDownMenu_AddButton(Format)
 			Format.text, Format.arg1, Format.checked, Format.isNotRadio = "XML", "XML", "XML" == CurFormat, false
-			UIDropDownMenu_AddButton(Format)
+			LibDD:UIDropDownMenu_AddButton(Format)
 		end)
 
 		-- Dropdown Menu Function
@@ -310,7 +311,7 @@ function CommDKP:ExportBox_Show(text)
 			end
 
 			f.desc:SetText(ExportDefinition);
-			UIDropDownMenu_SetText(f.FormatDropDown, CurFormat)
+			LibDD:UIDropDownMenu_SetText(f.FormatDropDown, CurFormat)
 			CloseDropDownMenus()
 		end
 

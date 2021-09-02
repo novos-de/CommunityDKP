@@ -167,9 +167,9 @@ core.EncounterList = {      -- Event IDs must be in the exact same order as core
 }
 
 core.CommDKPUI = {}        -- global storing entire Configuration UI to hide/show UI
-core.MonVersion = "v3.2.8";
-core.BuildNumber = 30208;
-core.ReleaseNumber = 69
+core.MonVersion = "v3.2.9";
+core.BuildNumber = 30209;
+core.ReleaseNumber = 70
 core.defaultTable = "__default";
 core.SemVer = core.MonVersion.."-r"..tostring(core.ReleaseNumber);
 core.UpgradeSchema = false;
@@ -818,7 +818,7 @@ end
 function CommDKP:SetCurrentTeam(index)
 	CommDKP:GetTable(CommDKP_DB, false)["defaults"]["CurrentTeam"] = tostring(index);
 	CommDKP:StatusVerify_Update();
-	UIDropDownMenu_SetText(CommDKP.UIConfig.TeamViewChangerDropDown, CommDKP:GetCurrentTeamName());
+	LibDD:UIDropDownMenu_SetText(CommDKP.UIConfig.TeamViewChangerDropDown, CommDKP:GetCurrentTeamName());
 
 	-- reset dkp table and update it
 	core.WorkingTable = CommDKP:GetTable(CommDKP_DKPTable, true);

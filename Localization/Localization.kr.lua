@@ -897,9 +897,9 @@ if GetLocale() == "koKR" then
     MIGRATIONCOMPLETED    = "Migration complete.|n|nPlease disable MonolithDKP and /reload the UI.", --TODO TRANSLATE:
 
     --TODO TRANSLATE:
-    CHANGELOG1 = "CommunityDKP - v3.2.8-r69-bcc",
-    CHANGELOG2 = " - fixed UI for classic era realms",
-    CHANGELOG3 = "",
+    CHANGELOG1 = "CommunityDKP - v3.2.9-r70-bcc",
+    CHANGELOG2 = " - updated ACE to its latest alpha version",
+    CHANGELOG3 = " - added LibUIDropDownMenu-4.0 to avoid taint issue",
     CHANGELOG4 = "",
     CHANGELOG5 = "",
     CHANGELOG6 = "",

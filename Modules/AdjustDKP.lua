@@ -4,6 +4,7 @@ local CommDKP = core.CommDKP;
 local L = core.L;
 
 local curReason;
+local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0");
 
 function CommDKP:AdjustDKP(value)
 	local adjustReason = curReason;
@@ -212,48 +213,49 @@ function CommDKP:AdjustDKPTab_Create()
 	-- Create the dropdown, and configure its appearance
 	CommDKP.ConfigTab2.reasonDropDown = CreateFrame("FRAME", "CommDKPConfigReasonDropDown", CommDKP.ConfigTab2, "CommunityDKPUIDropDownMenuTemplate")
 	CommDKP.ConfigTab2.reasonDropDown:SetPoint("TOPLEFT", CommDKP.ConfigTab2.description, "BOTTOMLEFT", -23, -60)
-	UIDropDownMenu_SetWidth(CommDKP.ConfigTab2.reasonDropDown, 150)
-	UIDropDownMenu_SetText(CommDKP.ConfigTab2.reasonDropDown, L["SELECTREASON"])
+	LibDD:UIDropDownMenu_SetWidth(CommDKP.ConfigTab2.reasonDropDown, 150)
+	LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab2.reasonDropDown, L["SELECTREASON"])
 
 	-- Create and bind the initialization function to the dropdown menu
-	UIDropDownMenu_Initialize(CommDKP.ConfigTab2.reasonDropDown, function(self, level, menuList)
-	local reason = UIDropDownMenu_CreateInfo()
+		LibDD:UIDropDownMenu_Initialize(CommDKP.ConfigTab2.reasonDropDown, function(self, level, menuList)
+		
+		local reason = LibDD:UIDropDownMenu_CreateInfo()
 		reason.func = self.SetValue
 		reason.fontObject = "CommDKPSmallCenter"
 		reason.text, reason.arg1, reason.checked, reason.isNotRadio = L["ONTIMEBONUS"], L["ONTIMEBONUS"], L["ONTIMEBONUS"] == curReason, true
-		UIDropDownMenu_AddButton(reason)
+		LibDD:UIDropDownMenu_AddButton(reason)
 		reason.text, reason.arg1, reason.checked, reason.isNotRadio = L["BOSSKILLBONUS"], L["BOSSKILLBONUS"], L["BOSSKILLBONUS"] == curReason, true
-		UIDropDownMenu_AddButton(reason)
+		LibDD:UIDropDownMenu_AddButton(reason)
 		reason.text, reason.arg1, reason.checked, reason.isNotRadio = L["RAIDCOMPLETIONBONUS"], L["RAIDCOMPLETIONBONUS"], L["RAIDCOMPLETIONBONUS"] == curReason, true
-		UIDropDownMenu_AddButton(reason)
+		LibDD:UIDropDownMenu_AddButton(reason)
 		reason.text, reason.arg1, reason.checked, reason.isNotRadio = L["NEWBOSSKILLBONUS"], L["NEWBOSSKILLBONUS"], L["NEWBOSSKILLBONUS"] == curReason, true
-		UIDropDownMenu_AddButton(reason)
+		LibDD:UIDropDownMenu_AddButton(reason)
 		reason.text, reason.arg1, reason.checked, reason.isNotRadio = L["CORRECTINGERROR"], L["CORRECTINGERROR"], L["CORRECTINGERROR"] == curReason, true
-		UIDropDownMenu_AddButton(reason)
+		LibDD:UIDropDownMenu_AddButton(reason)
 		reason.text, reason.arg1, reason.checked, reason.isNotRadio = L["DKPADJUST"], L["DKPADJUST"], L["DKPADJUST"] == curReason, true
-		UIDropDownMenu_AddButton(reason)
+		LibDD:UIDropDownMenu_AddButton(reason)
 		reason.text, reason.arg1, reason.checked, reason.isNotRadio = L["UNEXCUSEDABSENCE"], L["UNEXCUSEDABSENCE"], L["UNEXCUSEDABSENCE"] == curReason, true
-		UIDropDownMenu_AddButton(reason)
+		LibDD:UIDropDownMenu_AddButton(reason)
 		reason.text, reason.arg1, reason.checked, reason.isNotRadio = L["OTHER"], L["OTHER"], L["OTHER"] == curReason, true
-		UIDropDownMenu_AddButton(reason)
+		LibDD:UIDropDownMenu_AddButton(reason)
 	end)
 
 	-- Dropdown Menu Function
 	function CommDKP.ConfigTab2.reasonDropDown:SetValue(newValue)
 		if curReason ~= newValue then curReason = newValue else curReason = nil end
 
-		UIDropDownMenu_SetText(CommDKP.ConfigTab2.reasonDropDown, curReason)
+		LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab2.reasonDropDown, curReason)
 
 		if (curReason == L["ONTIMEBONUS"]) then CommDKP.ConfigTab2.addDKP:SetNumber(core.DB.DKPBonus.OnTimeBonus); CommDKP.ConfigTab2.BossKilledDropdown:Hide()
 		elseif (curReason == L["BOSSKILLBONUS"]) then
 			CommDKP.ConfigTab2.addDKP:SetNumber(core.DB.DKPBonus.BossKillBonus);
 			CommDKP.ConfigTab2.BossKilledDropdown:Show()
-			UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, core.CurrentRaidZone..": "..core.LastKilledBoss)
+			LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, core.CurrentRaidZone..": "..core.LastKilledBoss)
 		elseif (curReason == L["RAIDCOMPLETIONBONUS"]) then CommDKP.ConfigTab2.addDKP:SetNumber(core.DB.DKPBonus.CompletionBonus); CommDKP.ConfigTab2.BossKilledDropdown:Hide()
 		elseif (curReason == L["NEWBOSSKILLBONUS"]) then
 			CommDKP.ConfigTab2.addDKP:SetNumber(core.DB.DKPBonus.NewBossKillBonus);
 			CommDKP.ConfigTab2.BossKilledDropdown:Show()
-			UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, core.CurrentRaidZone..": "..core.LastKilledBoss)
+			LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, core.CurrentRaidZone..": "..core.LastKilledBoss)
 		elseif (curReason == L["UNEXCUSEDABSENCE"]) then CommDKP.ConfigTab2.addDKP:SetNumber(core.DB.DKPBonus.UnexcusedAbsence); CommDKP.ConfigTab2.BossKilledDropdown:Hide()
 		else CommDKP.ConfigTab2.addDKP:SetText(""); CommDKP.ConfigTab2.BossKilledDropdown:Hide() end
 
@@ -328,51 +330,52 @@ function CommDKP:AdjustDKPTab_Create()
 	CommDKP.ConfigTab2.BossKilledDropdown = CreateFrame("FRAME", "CommDKPBossKilledDropdown", CommDKP.ConfigTab2, "CommunityDKPUIDropDownMenuTemplate")
 	CommDKP.ConfigTab2.BossKilledDropdown:SetPoint("TOPLEFT", CommDKP.ConfigTab2.reasonDropDown, "BOTTOMLEFT", 0, 2)
 	CommDKP.ConfigTab2.BossKilledDropdown:Hide()
-	UIDropDownMenu_SetWidth(CommDKP.ConfigTab2.BossKilledDropdown, 210)
-	UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, L["SELECTBOSS"])
+	LibDD:UIDropDownMenu_SetWidth(CommDKP.ConfigTab2.BossKilledDropdown, 210)
+	LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, L["SELECTBOSS"])
 
-	UIDropDownMenu_Initialize(CommDKP.ConfigTab2.BossKilledDropdown, function(self, level, menuList)
-		local boss = UIDropDownMenu_CreateInfo()
+	LibDD:UIDropDownMenu_Initialize(CommDKP.ConfigTab2.BossKilledDropdown, function(self, level, menuList)
+		
+		local boss = LibDD:UIDropDownMenu_CreateInfo()
 		boss.fontObject = "CommDKPSmallCenter"
 		if (level or 1) == 1 then
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[9], core.CurrentRaidZone == core.ZoneList[9], "KARAZHAN", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[10], core.CurrentRaidZone == core.ZoneList[10], "GRULLSLAIR", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[11], core.CurrentRaidZone == core.ZoneList[11], "MAGTHERIDONSLAIR", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[12], core.CurrentRaidZone == core.ZoneList[12], "SERPENTSHRINECAVERN", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[13], core.CurrentRaidZone == core.ZoneList[13], "TEMPESTKEEP", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[14], core.CurrentRaidZone == core.ZoneList[14], "ZULAMAN", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[15], core.CurrentRaidZone == core.ZoneList[15], "BLACKTEMPLE", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[16], core.CurrentRaidZone == core.ZoneList[16], "SUNWELLPLATEAU", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[1], core.CurrentRaidZone == core.ZoneList[1], "MC", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[2], core.CurrentRaidZone == core.ZoneList[2], "BWL", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[3], core.CurrentRaidZone == core.ZoneList[3], "AQ", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[4], core.CurrentRaidZone == core.ZoneList[4], "NAXX", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[7], core.CurrentRaidZone == core.ZoneList[7], "ONYXIA", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[5], core.CurrentRaidZone == core.ZoneList[5], "ZG", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[6], core.CurrentRaidZone == core.ZoneList[6], "AQ20", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			boss.text, boss.checked, boss.menuList, boss.hasArrow = core.ZoneList[8], core.CurrentRaidZone == core.ZoneList[8], "WORLD", true
-			UIDropDownMenu_AddButton(boss)
+			LibDD:UIDropDownMenu_AddButton(boss)
 			
 		else
 			boss.func = self.SetValue
 			for i=1, #core.BossList[menuList] do
 				boss.text, boss.arg1, boss.checked = core.BossList[menuList][i], core.EncounterList[menuList][i], core.BossList[menuList][i] == core.LastKilledBoss
-				UIDropDownMenu_AddButton(boss, level)
+				LibDD:UIDropDownMenu_AddButton(boss, level)
 			end
 		end
 	end)
@@ -425,7 +428,7 @@ function CommDKP:AdjustDKPTab_Create()
 		if curReason ~= L["BOSSKILLBONUS"] and curReason ~= L["NEWBOSSKILLBONUS"] then
 			CommDKP.ConfigTab2.reasonDropDown:SetValue(L["BOSSKILLBONUS"])
 		end
-		UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, core.CurrentRaidZone..": "..core.LastKilledBoss)
+		LibDD:UIDropDownMenu_SetText(CommDKP.ConfigTab2.BossKilledDropdown, core.CurrentRaidZone..": "..core.LastKilledBoss)
 		CloseDropDownMenus()
 	end
 
