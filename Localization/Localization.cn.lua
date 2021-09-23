@@ -900,10 +900,10 @@ if GetLocale() == "zhCN" then
     MIGRATIONCOMPLETED    = "Migration complete.|n|nPlease disable MonolithDKP and /reload the UI.", --TODO TRANSLATE:
 
     --TODO TRANSLATE:
-    CHANGELOG1 = "CommunityDKP - v3.2.9-r71-bcc",
-    CHANGELOG2 = " - updated ACE to its latest alpha version",
-    CHANGELOG3 = " - added LibUIDropDownMenu-4.0 to avoid taint issue",
-    CHANGELOG4 = " - actually read the lib documentation and fixed dropdowns",
+    CHANGELOG1 = "CommunityDKP - v3.2.9-r73-bcc", 
+    CHANGELOG2 = "- fixed Hydross the Unstable encounter ID",   
+    CHANGELOG3 = "- Hydross should now grant auto DKP if enabled",
+    CHANGELOG4 = "",
     CHANGELOG5 = "",
     CHANGELOG6 = "",
     CHANGELOG7 = "",

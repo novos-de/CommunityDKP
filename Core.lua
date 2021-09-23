@@ -126,7 +126,7 @@ core.EncounterList = {      -- Event IDs must be in the exact same order as core
 		651 -- "Magtheridon"
 	  },
 	  SERPENTSHRINECAVERN = {
-		632, -- "Hydross the Unstable",
+		623, -- "Hydross the Unstable",
 		624, -- "The Lurker Below",
 		625, -- "Leotheras the Blind",
 		626, -- "Fathom-Lord Karathress",
@@ -171,7 +171,7 @@ core.EncounterList = {      -- Event IDs must be in the exact same order as core
 core.CommDKPUI = {}        -- global storing entire Configuration UI to hide/show UI
 core.MonVersion = "v3.2.9";
 core.BuildNumber = 30209;
-core.ReleaseNumber = 72
+core.ReleaseNumber = 73
 core.defaultTable = "__default";
 core.SemVer = core.MonVersion.."-r"..tostring(core.ReleaseNumber);
 core.UpgradeSchema = false;
