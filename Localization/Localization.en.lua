@@ -71,6 +71,13 @@ core.BossList = {
     "High Astromancer Solarian",
     "Kael'thas Sunstrider"
   },
+  MOUNTHYJAL = {
+  "Rage Winterchill",
+  "Anetheron",
+  "Kaz'rogal",
+  "Azgalor",
+  "Archimonde"
+  },   
   ZULAMAN = { -- 568
     "Akil'zon",
     "Nalorakk",
