@@ -72,6 +72,13 @@ if GetLocale() == "deDE" then
       "Hochastromantin Solarian",
       "Kael'thas Sonnenwanderer"
     },
+    MOUNTHYJAL = {
+      "Furor Winterfrost",
+      "Anetheron",
+      "Kaz'rogal",
+      "Azgalor",
+      "Archimonde"
+    },   
     ZULAMAN = { -- 568
       "Akil'zon",
       "Nalorakk",
